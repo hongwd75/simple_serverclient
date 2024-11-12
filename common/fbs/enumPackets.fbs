@@ -1,0 +1,19 @@
+namespace NetworkMessage;
+
+enum ServerPackets : ushort {
+	SC_LoginAns	= 1,
+	SC_AccountInfo,
+	SC_WorldEnterNotify,
+	SC_CreatePlayer,
+	SC_CreatePlayers,
+	SC_RemovePlayer,
+	SC_UpdatePosition,
+	SC_PlayerUpdate,
+}
+
+enum ClientPackets : ushort {
+	
+	CS_LoginReq = 1,
+	CS_WorldJoinReq,
+	CS_UpdatePosition,
+}

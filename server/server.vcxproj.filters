@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\User">
+      <UniqueIdentifier>{0b91f807-269b-4945-84b0-f08d521a76db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Rule">
+      <UniqueIdentifier>{c1e90fff-7eea-4082-8c84-e6b61cb9e3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base">
+      <UniqueIdentifier>{6d8f2a3d-8b1f-4030-95d1-2370a4843466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ConsoleCommand">
+      <UniqueIdentifier>{93009bd9-0766-4cba-87a7-b34b31c0d4a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="메뉴얼">
+      <UniqueIdentifier>{5fbd088e-cb35-48ea-852c-fb8e11e7ffba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\Network">
+      <UniqueIdentifier>{5bb45217-f7ed-4d68-9e5d-9d6e613ba8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\EventManager">
+      <UniqueIdentifier>{24703819-f7f2-4b29-b2d8-fdefc97bfcde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Packets">
+      <UniqueIdentifier>{0517f394-fed9-4c5f-99f1-47f89d593ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\Thread Pool">
+      <UniqueIdentifier>{3842f0bf-6faa-440d-b274-83cb10a17355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\Server main">
+      <UniqueIdentifier>{c9f43b21-41df-4d90-9e9d-a44e17081703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\User">
+      <UniqueIdentifier>{3ed672f4-e9cd-4de0-adcb-0d5119a7376c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\Network\Packet">
+      <UniqueIdentifier>{7fb301c7-8155-4e2a-a215-131276d60d6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Base\Network\Packet\Handler">
+      <UniqueIdentifier>{a13388ac-39be-48cf-b46f-0ce67b99b6ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleDisplay.cpp">
+      <Filter>소스 파일\ConsoleCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketServer.cpp">
+      <Filter>소스 파일\Base\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일\Base\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientManager.cpp">
+      <Filter>소스 파일\Base\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="EventCallbackManager.cpp">
+      <Filter>소스 파일\Base\EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>소스 파일\Base\Thread Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerMain.cpp">
+      <Filter>소스 파일\Base\Server main</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp">
+      <Filter>소스 파일\Base\User</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Base\User</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginReqHandler.cpp">
+      <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketHandler.cpp">
+      <Filter>소스 파일\Base\Network\Packet\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketHandlerFactory.cpp">
+      <Filter>소스 파일\Base\Network\Packet\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldJoinReqHandler.cpp">
+      <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdatePositionHandler.cpp">
+      <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConsoleDisplay.h">
+      <Filter>소스 파일\ConsoleCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="WebSocketServer.h">
+      <Filter>소스 파일\Base\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>소스 파일\Base\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="StatesEnums.h">
+      <Filter>소스 파일\Rule</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientManager.h">
+      <Filter>소스 파일\Base\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCallbackManager.h">
+      <Filter>소스 파일\Base\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="eEventCallbackTrigger.h">
+      <Filter>소스 파일\Base\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCallbackManager_impl.h">
+      <Filter>소스 파일\Base\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EventArgs.h">
+      <Filter>소스 파일\Base\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\packets\enumPackets_generated.h">
+      <Filter>소스 파일\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\packets\networkmessages_generated.h">
+      <Filter>소스 파일\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\packets\structs_generated.h">
+      <Filter>소스 파일\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>소스 파일\Base\Thread Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerMain.h">
+      <Filter>소스 파일\Base\Server main</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h">
+      <Filter>소스 파일\Base\User</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Base\User</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginReqHandler.h">
+      <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>소스 파일\Base\Network\Packet\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandlerFactory.h">
+      <Filter>소스 파일\Base\Network\Packet\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldJoinReqHandler.h">
+      <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdatePositionHandler.h">
+      <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>메뉴얼</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
