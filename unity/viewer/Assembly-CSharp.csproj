@@ -46,12 +46,30 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+     <Compile Include="Assets\Scripts\Characters\Body.cs" />
+     <Compile Include="Assets\Scripts\Utitlity\FollowCamera.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Settings" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Prefabs\Props" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Materials" />
+     <Folder Include="Assets\Resources" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Models\Animations" />
+     <Folder Include="Assets\Resources\Players" />
+     <Folder Include="Assets\Scripts" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Scenes" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Prefabs\Characters" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\TutorialInfo\Scripts" />
      <Folder Include="Assets\TutorialInfo\Icons" />
      <Folder Include="Assets\TutorialInfo" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Readme" />
+     <Folder Include="Assets\Scripts\Characters" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Models" />
+     <Folder Include="Assets\Scripts\Utitlity" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Prefabs" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Readme\Icons" />
+     <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Materials\Material Variations" />
      <Reference Include="UnityEngine">
      <HintPath>E:\Unity\Hub\Editor\2022.3.9f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
