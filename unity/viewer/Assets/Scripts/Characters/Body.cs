@@ -8,20 +8,11 @@ public class Body : MonoBehaviour
     private Animator anim;
     [SerializeField]
     private Renderer _renderer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void MoveTo(Vector3 newPos)
+    public void MoveTo(Vector3 newPos,int heading)
     {
-        
+        transform.SetPositionAndRotation(newPos,Quaternion.Euler(0, heading, 0));   
     }
 }

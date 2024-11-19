@@ -45,9 +45,14 @@
     <Analyzer Include="E:\Unity\Hub\Editor\2022.3.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Objects\IMoveObject.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+     <Compile Include="Assets\Scripts\Network\protocal\networkmessages_generated.cs" />
      <Compile Include="Assets\Scripts\Characters\Body.cs" />
+     <Compile Include="Assets\Scripts\Network\protocal\structs_generated.cs" />
+     <Compile Include="Assets\Scripts\Network\protocal\enumPackets_generated.cs" />
      <Compile Include="Assets\Scripts\Utitlity\FollowCamera.cs" />
+     <Compile Include="Assets\Scripts\Objects\ObjectManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Settings" />
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Prefabs\Props" />
@@ -58,11 +63,15 @@
      <Folder Include="Assets\Resources\Players" />
      <Folder Include="Assets\Scripts" />
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Scenes" />
+     <Folder Include="Assets\Scripts\Network" />
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Prefabs\Characters" />
+     <Folder Include="Assets\Scripts\Objects\Players" />
      <Folder Include="Assets\Scenes" />
+     <Folder Include="Assets\Scripts\Network\protocal" />
      <Folder Include="Assets\TutorialInfo\Scripts" />
      <Folder Include="Assets\TutorialInfo\Icons" />
      <Folder Include="Assets\TutorialInfo" />
+     <Folder Include="Assets\Scripts\Objects" />
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Readme" />
      <Folder Include="Assets\Scripts\Characters" />
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Models" />

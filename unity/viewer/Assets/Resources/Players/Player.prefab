@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6183918658287234914}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 8713573724757607021}
+  _renderer: {fileID: 421788227348485805}
 --- !u!1001 &8616216726818224445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,6 +119,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6506910152702571591}
   m_SourcePrefab: {fileID: 100100000, guid: 4a46e821c58b5cd42b14eaab6d197266, type: 3}
+--- !u!137 &421788227348485805 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8234987354189410192, guid: 4a46e821c58b5cd42b14eaab6d197266,
+    type: 3}
+  m_PrefabInstance: {fileID: 8616216726818224445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6183918658287234914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2468889828458600031, guid: 4a46e821c58b5cd42b14eaab6d197266,
@@ -143,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  _renderer: {fileID: 0}
 --- !u!95 &8713573724757607021 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1116371902028168016, guid: 4a46e821c58b5cd42b14eaab6d197266,
