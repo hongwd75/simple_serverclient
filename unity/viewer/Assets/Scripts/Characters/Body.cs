@@ -1,18 +1,82 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Players;
+using TMPro;
 using UnityEngine;
 
-public class Body : MonoBehaviour
+public class Body : MonoBehaviour, IMoveObject
 {
     [SerializeField]
     private Animator anim;
     [SerializeField]
     private Renderer _renderer;
+    [SerializeField]
+    private TextMeshPro _name;
+
+    // 랠름
+    private int _realm = 0;
     
+    // 이동 관련 
+    private bool backStep = false;
+    private Vector3 _destination;
+    private float _moveSpeed = 0f;
+    private float _currentSpeed = 0f;
+    private readonly float acceleration = 2f;
 
-
-    public void MoveTo(Vector3 newPos,int heading)
+    #region 스폰 로직 ===========================================================================
+    public void Spawn(int realm, Vector3 pos,int heading,string name)
     {
-        transform.SetPositionAndRotation(newPos,Quaternion.Euler(0, heading, 0));   
+        _realm = realm;
+        _name.text = name;
+        
+        _name.color = realm switch
+        {
+            0 => Color.red,
+            1 => Color.blue,
+            _=> Color.black
+        };
+        
+        _moveSpeed = 0;
+        _destination = pos;
+        transform.SetPositionAndRotation(pos,Quaternion.Euler(0, heading, 0));  
+    }
+    #endregion
+
+    #region 이동 로직 ===========================================================================
+    public void OnMove(Vector3Int pos, int headingTo, int speed)
+    {
+        MoveTo(pos, headingTo, speed);
+    }
+
+    private void MoveTo(Vector3 newPos,int heading,int speed)
+    {
+        transform.rotation = Quaternion.Euler(0, heading, 0);
+        _moveSpeed = (float)speed;
+        _destination = newPos;
+    }
+    #endregion
+
+    public void Update()
+    {
+        if (_currentSpeed > 0f || _moveSpeed > 0f)
+        {
+            if (_currentSpeed < _moveSpeed)
+            {
+                _currentSpeed += acceleration * Time.deltaTime;
+                if (_currentSpeed > _moveSpeed) _currentSpeed = _moveSpeed;
+            }
+            else if(_currentSpeed > _moveSpeed)
+            {
+                _currentSpeed -= acceleration * Time.deltaTime;
+                if (_currentSpeed < _moveSpeed) _currentSpeed = _moveSpeed;
+            }
+            
+            transform.Translate((backStep ? Vector3.back : Vector3.forward) * (_currentSpeed * Time.deltaTime));
+            if(_moveSpeed == 0f && _currentSpeed == 0f)
+            {
+                transform.position = _destination;
+            }
+        }
     }
 }
