@@ -23,7 +23,7 @@ namespace GameEditor.Utility
         [MenuItem("Tools/신규 패킷 핸들러 생성")]
         public static void GenerateFlatBufferPacketHandle()
         {
-            string cspath = Application.dataPath + "/Scripts/Network/protocal/Messages/";
+            string cspath = Application.dataPath + "/Scripts/Network/protocol/Messages/";
 
             // 패킷 리스트 획득
             List<ServerPackets> packetlist = Enum.GetValues(typeof(ServerPackets)).Cast<ServerPackets>()
@@ -87,9 +87,10 @@ namespace GameEditor.Utility
             csfile.AppendLine($"\tpublic class {id}_handler : IPacketMessage");
             csfile.AppendLine("\t{");
             csfile.AppendLine("\t\t#pragma warning disable CS1998");
-            csfile.AppendLine("\t\tpublic async Task Packet(ByteBuffer buteBuffer)");
+            csfile.AppendLine("\t\tpublic async Task Packet(ByteBuffer byteBuffer)");
             csfile.AppendLine("\t\t#pragma warning restore CS1998");
             csfile.AppendLine("\t\t{");
+            csfile.AppendLine($"\t\t\t{id}_FBS packet = {id}.GetRootAs{id}(byteBuffer).UnPack();");
             csfile.AppendLine("\t\t\t//Todo 코드 작업 필요");
             csfile.AppendLine("\t\t}");
             csfile.AppendLine("\t}");

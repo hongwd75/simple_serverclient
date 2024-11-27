@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Utitlity
+namespace Utility
 {
     public class FollowCamera : MonoBehaviour
     {
