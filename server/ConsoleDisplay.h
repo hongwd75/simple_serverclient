@@ -1,4 +1,5 @@
 #pragma once
+#include<string>
 class ConsoleDisplay
 {
 
@@ -17,5 +18,6 @@ public:
 	
 	static void WriteFormat(TYPE logtype, const char* format, ...);
 	static void Write(TYPE logtype, const char* message);
+	static void LogMessage(TYPE logtype,const std::string& message);
 };
 

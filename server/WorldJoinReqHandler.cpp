@@ -11,10 +11,19 @@ void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<
 		enterinfo.zoneid = 1;
 		user->Send(NetworkMessage::ServerPackets::ServerPackets_SC_WorldEnterNotify, &enterinfo);
 
+		bool reconnect = false;
 		// 다른 사용자에게 알림
 		if (packet->gate() == 0)
 		{
-			user->GetAccount()->UpdatePosition(rand() % 359, rand() % 300, rand() % 300, 1);
+			// 이미 접속되어 있었음
+			if (user->GetPlayerState() != Enums::ClientState::Room)
+			{
+				user->GetAccount()->UpdatePosition(rand() % 359, rand() % 300, 1, rand() % 300);
+			}
+			else
+			{
+				reconnect = true;
+			}
 		}
 
 		// 기존 자리를 찾아서 넘겨줘야 하지만 지금은 랜덤으로 1~ 300 사이의 값을 전달하자.
@@ -32,14 +41,18 @@ void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<
 
 		auto connectSessions = ServerMain::instance()->SocketMan()->GetClientManager();
 
+
 		// 범위를 정하는 코드가 있어야 하지만 우선은 모두에게 브로드케스팅하자
 		user->SetPlayerState(Enums::ClientState::Room);
 		auto list = connectSessions->GetRangeUsers(user->GetAccount()->position, 1000);
 		for (auto snd : list)
 		{
-			if (snd != user)
+			if (reconnect == false)
 			{
-				snd->Send(NetworkMessage::ServerPackets::ServerPackets_SC_CreatePlayer, &req);
+				if (snd != user)
+				{
+					snd->Send(NetworkMessage::ServerPackets::ServerPackets_SC_CreatePlayer, &req);
+				}
 			}
 
 			auto playerobject = std::make_shared<NetworkMessage::CreatePlayerInfo_FBS>();

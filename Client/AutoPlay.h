@@ -14,6 +14,8 @@ private:
 	void SendUpdatePosition(Player* player);
 
 private:
+	int directmove;
+	float movex, movez;
 	std::thread brain;
 	std::atomic<bool> thinking;
 };

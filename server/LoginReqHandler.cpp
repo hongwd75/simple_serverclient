@@ -63,9 +63,10 @@ void LoginReqHandler::check_login(Client* user, const std::string& id, const std
 				connectSessions->ChangeSocketSession(DB_uid, user->GetSocket());
 
 				// 재접속에 필요한 정보 다시 전송해줘야 한다.
-				if (user->GetPlayerState() == Enums::ClientState::Room)
+				if (newuser->GetPlayerState() == Enums::ClientState::Room)
 				{
-
+					// 메시지 전송
+					sendLoginAns(newuser, 0);
 				}
 			}
 			else

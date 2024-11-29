@@ -5,7 +5,7 @@ using Players;
 using TMPro;
 using UnityEngine;
 
-public class Body : MonoBehaviour, IMoveObject
+public class Body : MonoBehaviour
 {
     [SerializeField]
     private Animator anim;
@@ -32,20 +32,27 @@ public class Body : MonoBehaviour, IMoveObject
         
         _name.color = realm switch
         {
-            0 => Color.red,
+            0 => Color.yellow,
             1 => Color.blue,
+            2 => Color.red,
             _=> Color.black
         };
         
         _moveSpeed = 0;
+        pos *= 0.1f;
+        pos.x -= 15f;
+        pos.z -= 15f;
         _destination = pos;
         transform.SetPositionAndRotation(pos,Quaternion.Euler(0, heading, 0));  
     }
     #endregion
 
     #region 이동 로직 ===========================================================================
-    public void OnMove(Vector3Int pos, int headingTo, int speed)
+    public void OnMove(Vector3 pos, int headingTo, int speed)
     {
+        pos *= 0.1f;
+        pos.x -= 15f;
+        pos.z -= 15f;
         MoveTo(pos, headingTo, speed);
     }
 
@@ -54,6 +61,8 @@ public class Body : MonoBehaviour, IMoveObject
         transform.rotation = Quaternion.Euler(0, heading, 0);
         _moveSpeed = (float)speed;
         _destination = newPos;
+        
+        anim.SetFloat("MoveSpeed",0.3f);
     }
     #endregion
 

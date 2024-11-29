@@ -12,7 +12,6 @@ WebSocketServer::WebSocketServer() : connectSessions(this)
 void WebSocketServer::Start(uint16_t port)
 {
 	socketInstance.clear_access_channels(websocketpp::log::alevel::all);
-
 	socketInstance.listen(port);
 	socketInstance.start_accept();
 	socketioThread = std::thread([&]() {
@@ -37,7 +36,7 @@ void WebSocketServer::Send(websocketpp::connection_hdl hdl, const char* data, si
 	}
 	catch (const std::exception&)
 	{
-
+		connectSessions.RemoveSession(hdl);
 	}
 }
 

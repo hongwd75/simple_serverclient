@@ -6,6 +6,8 @@
 #include "StatesEnums.h"
 #include "Account.h"
 #include <websocketpp/server.hpp>
+#include "ConsoleDisplay.h"
+
 
 class WebSocketServer;
 
@@ -31,6 +33,7 @@ public:
 
 private:
 	void SendInternal(const char* data, size_t size);
+	void Log(const char* msg);
 
 private:
 	int SessionID = 0;
@@ -57,6 +60,7 @@ inline void Client::Send(NetworkMessage::ServerPackets packetid, const T* messag
 	NetworkMessage::PacketWrapper_FBS pack;
 	pack.type = packetid;
 	pack.packet = packet_data;
+
 
 	flatbuffers::FlatBufferBuilder builder2;
 	auto serialized_message2 = NetworkMessage::PacketWrapper::Pack(builder2, &pack);

@@ -12,7 +12,7 @@ void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vecto
 	auto plist = connectSessions->GetRangeUsers(user->GetAccount()->position, 300);
 	
 	NetworkMessage::SC_UpdatePosition_FBS req;
-	req.head = packet->head();
+
 	req.sessionid = user->GetSessionID();
 	req.head = user->GetAccount()->heading;
 	req.position = Vector3Convert(user->GetAccount()->position);

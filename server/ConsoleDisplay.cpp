@@ -49,5 +49,34 @@ void ConsoleDisplay::Write(TYPE logtype, const char* message)
 
 	}
 
-	std::cout <<ansi << message << "\033[0m" << std::endl;
+	std::cout << ansi << message << "\033[0m" << std::endl;
+}
+
+void ConsoleDisplay::LogMessage(TYPE logtype, const std::string& message)
+{
+	std::string ansi = "";
+
+	switch (logtype)
+	{
+	case TYPE::Error:
+		ansi = "\033[1;31m";
+		break;
+	case TYPE::Important:
+		ansi = "\033[1;32m";
+		break;
+	case TYPE::Warring:
+		ansi = "\033[1;33m";
+		break;
+	case TYPE::Success:
+		ansi = "\033[1;34m";
+		break;
+	case TYPE::ServerState:
+		ansi = "\033[1;35m";
+		break;
+	default:
+		ansi = "";
+		break;
+
+	}
+	std::cout << ansi << message << std::endl;
 }

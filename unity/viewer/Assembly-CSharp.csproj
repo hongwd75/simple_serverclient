@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_RemovePlayer_handler.cs" />
      <Compile Include="Assets\Scripts\Network\Client\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_PlayerUpdate_handler.cs" />
+     <Compile Include="Assets\Scripts\Objects\Players\GamePlayer.cs" />
      <Compile Include="Assets\Scripts\Network\Client\NetworkType\NetworkClient.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\Table.cs" />
      <Compile Include="Assets\Scripts\Network\Attribute\PacketMessageAttribute.cs" />
@@ -58,19 +59,21 @@
      <Compile Include="Assets\Scripts\Network\protocol\enumPackets_generated.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\FlatBufferConstants.cs" />
      <Compile Include="Assets\Scripts\Network\Attribute\IPacketMessage.cs" />
-     <Compile Include="Assets\Scripts\Objects\IMoveObject.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\FlatBufferBuilder.cs" />
      <Compile Include="Assets\Scripts\Network\Client\NetworkType\TCPIPSocketClient.cs" />
      <Compile Include="Assets\Scripts\Utility\MonoSingleton.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_WorldEnterNotify_handler.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\Offset.cs" />
+     <Compile Include="Assets\Scripts\Objects\Structs\PlayerInfo.cs" />
      <Compile Include="Assets\Scripts\Utility\FollowCamera.cs" />
+     <Compile Include="Assets\Scripts\Objects\BaseObject.cs" />
      <Compile Include="Assets\Scripts\Characters\Body.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_CreatePlayer_handler.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\FlatBufferVerify.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\ByteBufferUtil.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_UpdatePosition_handler.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_AccountInfo_handler.cs" />
+     <Compile Include="Assets\Scripts\Objects\Structs\baseObjectData.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\ByteBuffer.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\Messages\SC_LoginAns_handler.cs" />
      <Compile Include="Assets\Externals\FlatBuffers\Struct.cs" />
@@ -79,6 +82,7 @@
      <Compile Include="Assets\Scripts\Objects\ObjectManager.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\networkmessages_generated.cs" />
      <Compile Include="Assets\Scripts\Network\protocol\structs_generated.cs" />
+     <Compile Include="Assets\Scripts\Logic\SceneMain\EntityManager.cs" />
      <Compile Include="Assets\Scripts\Network\Client\NetworkType\WebSocketClient.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -134,6 +138,7 @@
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Prefabs" />
      <Folder Include="Assets\Mini Simple Characters Skeleton Demo\Readme\Icons" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <Folder Include="Assets\Scripts\Objects\Structs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <Folder Include="Assets\TextMesh Pro\Documentation" />

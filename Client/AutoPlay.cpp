@@ -14,8 +14,10 @@ float getRandomFloatInRange(float lower, float upper) {
 }
 
 
-AutoPlay::AutoPlay() : thinking(false)
+AutoPlay::AutoPlay() : thinking(false), directmove(0)
 {
+	movex = 0;
+	movez = 0;
 }
 
 void AutoPlay::Wakeup()
@@ -60,33 +62,49 @@ void AutoPlay::OnThink()
 
 void AutoPlay::MoveRandom(Player *player)
 {
-	float minx = -0.5f;
-	float minz = -0.5f;
-	float maxx = 0.5f;
-	float maxz = 0.5f;
+	float minx = -0.1f;
+	float minz = -0.1f;
+	float maxx = 0.1f;
+	float maxz = 0.1f;
 	Vector3 pos = player->GetPosition();
 
-	if (pos.x < 0.5f)
+	if (directmove >= 0)
 	{
+		directmove--;
+		pos.x += movex;
+		pos.z += movez;
+	}
+
+	if (pos.x < 0.1f)
+	{
+		directmove = 0;
 		minx = - pos.x;
 	} else if (pos.x > 299.5f)
 	{
+		directmove = 0;
 		maxx = 300.0f - pos.x;
 	}
 
-	if (pos.z < 0.5f)
+	if (pos.z < 0.1f)
 	{
+		directmove = 0;
 		minz = - pos.z;
 	} else if (pos.z > 299.5f)
 	{
+		directmove = 0;
 		maxz = 300.0f - pos.z;
 	}
 
-	pos.x += getRandomFloatInRange(minx, maxx);
-	pos.z += getRandomFloatInRange(minz, maxz);
+	if (directmove <= 0)
+	{
+		movex  = getRandomFloatInRange(minx, maxx);
+		movez  = getRandomFloatInRange(minz, maxz);
+		directmove = rand() % 100 + 400;
+	}
 
 	int heading = player->calc_heading(pos.x, pos.z);
 	player->UpdatePosition(heading, pos);
+	SendUpdatePosition(player);
 }
 
 void AutoPlay::SendUpdatePosition(Player* player)

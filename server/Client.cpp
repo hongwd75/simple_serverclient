@@ -75,3 +75,8 @@ void Client::SendInternal(const char* data, size_t size)
 
 	}
 }
+
+void Client::Log(const char* msg)
+{
+	std::cout << msg << std::endl;
+}

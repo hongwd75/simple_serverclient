@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Google.FlatBuffers;
 using Network.Protocol;
 using NetworkMessage;
+using UnityEngine;
 
 namespace Network.Client
 {
@@ -34,6 +35,7 @@ namespace Network.Client
         {
             if (_packetMessages.TryGetValue(id, out var handler) == true)
             {
+                Debug.Log($" 받은 패킷 : {id.ToString()}");
                 _= handler.Invoke(data);
             }
         }
