@@ -1,3 +1,9 @@
+테스트 GIF 영상
+
+
+
+![movetest](https://github.com/user-attachments/assets/98e6cff4-b796-48b2-88d9-e0db52d9d60e)
+
 REDIS 참고 자료
 ---------------
 1. C# 사용 기초 설명
