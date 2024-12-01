@@ -44,6 +44,9 @@ public:
 	Client *GetClient(websocketpp::connection_hdl hdl);
 	Client* GetClientBySession(int sessionid);
 
+public:
+	int GetClientSize();
+
 private:
 	std::unordered_map<uint64_t,int> Clients;
 	std::unordered_map<websocketpp::connection_hdl,	int, connection_hdl_hash, connection_hdl_equal> sock2Client;

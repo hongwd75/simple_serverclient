@@ -40,23 +40,24 @@ bool ClientManager::AddLoginedUser(Client *client)
 
 bool ClientManager::ChangeSocketSession(uint64_t uid, websocketpp::connection_hdl newsocket)
 {
+	std::lock_guard<std::mutex> lock(session_mutex);
 	auto itr = Clients.find(uid);
 
 	if (itr != Clients.end())
 	{
-		auto client = ClientSlot[(*itr).second].get();
+		int sessionId = itr->second;
+		auto &client = ClientSlot[sessionId];
 		if (client != nullptr)
 		{
-			client->SetSocket(newsocket);
-
-			auto skitr = sock2Client.find(newsocket);
-			if (skitr != sock2Client.end())
-			{
-				ClientSlot[(*skitr).second] = nullptr;
-				emptyClientSlot.push((*skitr).second);
-				(*skitr).second = client->GetSessionID();
-				return true;
+			auto oldSocketItr = sock2Client.find(client->GetSocket());
+			if (oldSocketItr != sock2Client.end()) {
+				sock2Client.erase(oldSocketItr);
 			}
+
+			// 새 연결 등록
+			client->SetSocket(newsocket);
+			sock2Client[newsocket] = sessionId;
+			return true;
 		}
 	}
 	return false;
@@ -68,9 +69,10 @@ void ClientManager::RemoveSession(websocketpp::connection_hdl hdl)
 	auto itr = sock2Client.find(hdl);
 	if (itr != sock2Client.end())
 	{
-		Client* ptr = ClientSlot[(*itr).second].get();
+		auto& ptr = ClientSlot[(*itr).second];
 		if (ptr != nullptr)
 		{
+			int sessionid = ptr->GetSessionID();
 			if (ptr->GetPlayerState() == Enums::ClientState::Room)
 			{
 				// 룸에 있는 플레이어는 재접속 후, 플레이가 계속 이어져야 한다.
@@ -82,8 +84,8 @@ void ClientManager::RemoveSession(websocketpp::connection_hdl hdl)
 				{
 					Clients.erase(uid);
 				}
-				ClientSlot[ptr->GetSessionID()] = nullptr;
-				emptyClientSlot.push(ptr->GetSessionID());
+				ClientSlot[sessionid] = nullptr;
+				emptyClientSlot.push(sessionid);
 			}
 			sock2Client.erase(itr);
 		}
@@ -175,6 +177,13 @@ Client* ClientManager::GetClientBySession(int sessionid)
 		return ClientSlot[sessionid].get();
 	}
 	return nullptr;
+}
+
+int ClientManager::GetClientSize()
+{
+	std::lock_guard<std::mutex> lock(session_mutex);
+	int size = sock2Client.size();
+	return size;
 }
 
 
