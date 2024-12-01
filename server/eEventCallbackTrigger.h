@@ -4,8 +4,7 @@ namespace EventCallback
 	enum class eTrigger
 	{
 		WriteLog,
-		RemovePacketHandle,
-		RemoveExpiredPacketHandle,
+		RemoveClientNetworkHandle,
 		PlayerLogin
 	};
 }

@@ -4,8 +4,16 @@
 #include<unordered_map>
 #include<list>
 #include<mutex>
+#include "EventCallbackManager.h"
 
 class WebSocketServer;
+
+class ForceDisconnedEventArgs : public EventArgs 
+{
+public:
+	websocketpp::connection_hdl disconnectObj;
+	ForceDisconnedEventArgs(websocketpp::connection_hdl obj) : disconnectObj(obj) {}
+};
 
 struct connection_hdl_hash {
 	std::size_t operator()(const websocketpp::connection_hdl& hdl) const {
@@ -25,6 +33,8 @@ class ClientManager
 	const int MaxUserSize = 10000;
 public:
 	ClientManager(WebSocketServer* server);
+	~ClientManager();
+	void OnForceDisconnectEvent(void* sender, EventArgs* args);
 
 public:
 	bool AddSession(websocketpp::connection_hdl hdl);

@@ -1,5 +1,6 @@
 ﻿#include "WebSocketServer.h"
 #include "ServerMain.h"
+#include "EventCallbackManager.h"
 
 WebSocketServer::WebSocketServer() : connectSessions(this)
 {
@@ -49,12 +50,7 @@ void WebSocketServer::Send(websocketpp::connection_hdl hdl, const char* data, si
 	}
 	catch (const std::exception&e)
 	{
-		if(hdl.expired() == false)
-			connectSessions.RemoveSession(hdl);
-		else
-		{
-			OutputDebugStringA(e.what());
-		}
+		EventCallbackManager::instance()->Notify(EventCallback::eTrigger::RemoveClientNetworkHandle, nullptr, new ForceDisconnedEventArgs(hdl));
 	}
 }
 

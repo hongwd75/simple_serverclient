@@ -1,11 +1,29 @@
 ﻿#include "ClientManager.h"
 #include "ConsoleDisplay.h"
 #include "WebSocketServer.h"
+#include "eEventCallbackTrigger.h"
+
 
 ClientManager::ClientManager(WebSocketServer* _server): server(_server), ClientSlot(MaxUserSize+1)
 {
 	for (int i = 1; i <= MaxUserSize; ++i) {
 		emptyClientSlot.push(i);
+	}
+
+	EventCallbackManager::instance()->BindEvent(this, EventCallback::eTrigger::RemoveClientNetworkHandle, &ClientManager::OnForceDisconnectEvent);
+}
+
+ClientManager::~ClientManager()
+{
+	EventCallbackManager::instance()->UnbindEvent(this, EventCallback::eTrigger::RemoveClientNetworkHandle, &ClientManager::OnForceDisconnectEvent);
+}
+
+void ClientManager::OnForceDisconnectEvent(void* sender, EventArgs* args)
+{
+	ForceDisconnedEventArgs* pMsg = (ForceDisconnedEventArgs*)args;
+	if (pMsg != nullptr)
+	{
+		RemoveSession(pMsg->disconnectObj);
 	}
 }
 

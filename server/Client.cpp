@@ -55,14 +55,6 @@ void Client::OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uin
 	{
 		packetprocessor->HandlePacket(this, packetData);
 	}
-	//auto packetWarpper = NetworkMessage::GetPacketWrapper(buffer);
-	//auto packetType = packetWarpper->type();
-	//auto packetData = packetWarpper->packet();
-	//switch (packetType)
-	//{
-	//	HANDLE_PACKET(CS_LoginReq, LoginReq)
-	//	HANDLE_PACKET(CS_UpdatePosition, UpdatePosition)
-	//}
 }
 
 
