@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <websocketpp/common/connection_hdl.hpp>
 #include "Client.h"
 class PacketHandler

@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include <cmath>
 
 #ifndef M_PI
@@ -30,16 +30,16 @@ float Player::calc_heading(float x,float z)
     float deltaX = x - position.x;
     float deltaZ = z - position.z;
 
-    // atan2¸¦ »ç¿ëÇÏ¿© °¢µµ¸¦ ±¸ÇÕ´Ï´Ù. °á°ú´Â ¶óµğ¾È ´ÜÀ§ÀÔ´Ï´Ù.
+    // atan2ë¥¼ ì‚¬ìš©í•˜ì—¬ ê°ë„ë¥¼ êµ¬í•©ë‹ˆë‹¤. ê²°ê³¼ëŠ” ë¼ë””ì•ˆ ë‹¨ìœ„ì…ë‹ˆë‹¤.
     float angleInRadians = std::atan2(deltaZ, deltaX);
 
-    // ¿øÇÏ´Â °æ¿ì, °¢µµ¸¦ degree·Î º¯È¯ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+    // ì›í•˜ëŠ” ê²½ìš°, ê°ë„ë¥¼ degreeë¡œ ë³€í™˜í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
     float angleInDegrees = angleInRadians * (180.0f / M_PI);
 
-    // °¢µµ´Â ±âº»ÀûÀ¸·Î -180 ~ 180 »çÀÌÀÇ °ªÀ¸·Î ³ª¿É´Ï´Ù.
+    // ê°ë„ëŠ” ê¸°ë³¸ì ìœ¼ë¡œ -180 ~ 180 ì‚¬ì´ì˜ ê°’ìœ¼ë¡œ ë‚˜ì˜µë‹ˆë‹¤.
     if (angleInDegrees < 0) {
-        angleInDegrees += 360.0f;  // 0 ~ 360 ¹üÀ§·Î º¯È¯
+        angleInDegrees += 360.0f;  // 0 ~ 360 ë²”ìœ„ë¡œ ë³€í™˜
     }
 
-    return angleInDegrees;  // degree ´ÜÀ§ÀÇ °¢µµ ¹İÈ¯
+    return angleInDegrees;  // degree ë‹¨ìœ„ì˜ ê°ë„ ë°˜í™˜
 }

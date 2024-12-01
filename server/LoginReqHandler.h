@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <unordered_map>
 #include <mutex>
@@ -33,15 +33,15 @@ public:
         std::string accName = accountName;
         if (accName.empty()) {
             std::cerr << "(Enter) No account name" << std::endl;
-            accName = "";  // ºó ¹®ÀÚ¿­·Î Ã³¸®
+            accName = "";  // ë¹ˆ ë¬¸ìì—´ë¡œ ì²˜ë¦¬
         }
 
         std::shared_ptr<LockCount> lockObj = nullptr;
 
-        { // ½ºÄÚÇÁ¸¦ ÀÌ¿ëÇØ ÀüÃ¼ mutex ¹üÀ§¸¦ Á¦ÇÑ
+        { // ìŠ¤ì½”í”„ë¥¼ ì´ìš©í•´ ì „ì²´ mutex ë²”ìœ„ë¥¼ ì œí•œ
             std::unique_lock<std::mutex> lock(mapMutex);
 
-            // map¿¡¼­ lock °´Ã¼ °¡Á®¿À±â ¶Ç´Â »ı¼ºÇÏ±â
+            // mapì—ì„œ lock ê°ì²´ ê°€ì ¸ì˜¤ê¸° ë˜ëŠ” ìƒì„±í•˜ê¸°
             auto it = m_locks.find(accName);
             if (it == m_locks.end()) {
                 lockObj = std::make_shared<LockCount>();
@@ -55,12 +55,12 @@ public:
                 std::cerr << "(Enter) No lock object for account: '" << accName << "'" << std::endl;
             }
             else {
-                // Àá±İ È½¼ö Áõ°¡
+                // ì ê¸ˆ íšŸìˆ˜ ì¦ê°€
                 lockObj->count++;
             }
         }
 
-        // lockObjÀÇ mutex Àá±İ
+        // lockObjì˜ mutex ì ê¸ˆ
         if (lockObj) {
             lockObj->mtx.lock();
         }
@@ -69,21 +69,21 @@ public:
     void ExitLock(const std::string& accountName) {
         std::shared_ptr<LockCount> lockObj = nullptr;
 
-        { // ½ºÄÚÇÁ Á¦ÇÑÀ» À§ÇÑ Áß°ıÈ£
+        { // ìŠ¤ì½”í”„ ì œí•œì„ ìœ„í•œ ì¤‘ê´„í˜¸
             std::unique_lock<std::mutex> lock(mapMutex);
             auto it = m_locks.find(accountName);
 
             if (it != m_locks.end()) {
                 lockObj = it->second;
 
-                // lockObj°¡ ´õ ÀÌ»ó ÇÊ¿äÇÏÁö ¾ÊÀ¸¸é Á¦°Å
+                // lockObjê°€ ë” ì´ìƒ í•„ìš”í•˜ì§€ ì•Šìœ¼ë©´ ì œê±°
                 if (--lockObj->count == 0) {
                     m_locks.erase(it);
                 }
             }
         }
 
-        // lockObjÀÇ mutex Àá±İ ÇØÁ¦
+        // lockObjì˜ mutex ì ê¸ˆ í•´ì œ
         if (lockObj) {
             lockObj->mtx.unlock();
         }

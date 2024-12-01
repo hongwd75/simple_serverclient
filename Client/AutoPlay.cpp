@@ -1,4 +1,4 @@
-#include "AutoPlay.h"
+ï»¿#include "AutoPlay.h"
 #include "EntityManager.h"
 #include <iostream>
 #include <cmath>
@@ -8,7 +8,7 @@
 
 float getRandomFloatInRange(float lower, float upper) {
 	static std::random_device rd;
-	static std::mt19937 generator(rd());  // Mersenne Twister ¿£Áø »ç¿ë
+	static std::mt19937 generator(rd());  // Mersenne Twister ì—”ì§„ ì‚¬ìš©
 	std::uniform_real_distribution<float> distribution(lower, upper);
 	return distribution(generator);
 }

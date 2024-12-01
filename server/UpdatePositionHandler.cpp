@@ -1,4 +1,4 @@
-#include "UpdatePositionHandler.h"
+ï»¿#include "UpdatePositionHandler.h"
 #include "ServerMain.h"
 
 void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
@@ -6,7 +6,7 @@ void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vecto
 	auto packet = flatbuffers::GetRoot<NetworkMessage::CS_UpdatePosition>(recvdata->data());
 	user->GetAccount()->UpdatePosition(packet->head(), packet->position()->x(), packet->position()->y(), packet->position()->z());
 
-	// ³ª¸¦ Á¦¿ÜÇÑ ³ª¸ÓÁö¿¡°Ô ºê·Îµå ÄÉ½ºÆÃ
+	// ë‚˜ë¥¼ ì œì™¸í•œ ë‚˜ë¨¸ì§€ì—ê²Œ ë¸Œë¡œë“œ ì¼€ìŠ¤íŒ…
 	auto connectSessions = ServerMain::instance()->SocketMan()->GetClientManager();
 
 	auto plist = connectSessions->GetRangeUsers(user->GetAccount()->position, 300);

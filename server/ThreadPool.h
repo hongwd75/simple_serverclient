@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0601
 #endif
@@ -45,7 +45,7 @@ public:
     void addTimerTask(std::function<void()> task, int milliseconds);
     std::future<std::string> addDBTask(std::function<std::string()> task);
 
-    // ºñµ¿±â DB Äõ¸® ½ÇÇà ÇÔ¼ö
+    // ë¹„ë™ê¸° DB ì¿¼ë¦¬ ì‹¤í–‰ í•¨ìˆ˜
     template<typename Callback>
     void asyncDBQuery(const std::string& query, Callback callback) {
         thread_pool_.post([this, query, callback]() {
@@ -55,7 +55,7 @@ public:
     }
 
 private:
-    // ½ÇÁ¦ DB Äõ¸® ½ÇÇàÀ» ½Ã¹Ä·¹ÀÌ¼ÇÇÏ´Â ÇÔ¼ö
+    // ì‹¤ì œ DB ì¿¼ë¦¬ ì‹¤í–‰ì„ ì‹œë®¬ë ˆì´ì…˜í•˜ëŠ” í•¨ìˆ˜
     std::string executeDBQuery(const std::string& query);
 
 private:

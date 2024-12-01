@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "PlayerManager.h"
 #include "WebSocketClient.h"
 #include "AutoPlay.h"

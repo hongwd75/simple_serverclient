@@ -1,6 +1,6 @@
-#pragma once
-// ## ¾²·¹µå ¼¼ÀÌÇÁÆ¼ÇÏÁö ¾ÊÀ½.
-// ## ÀÌº¥Æ® Äİ ÇÔ¼ö¿¡ ´ëÇØ¼­´Â ÀÛ¾÷ÀÚ°¡ °ü¸®ÇÏ¿©¾ß ÇÑ´Ù.
+ï»¿#pragma once
+// ## ì“°ë ˆë“œ ì„¸ì´í”„í‹°í•˜ì§€ ì•ŠìŒ.
+// ## ì´ë²¤íŠ¸ ì½œ í•¨ìˆ˜ì— ëŒ€í•´ì„œëŠ” ì‘ì—…ìê°€ ê´€ë¦¬í•˜ì—¬ì•¼ í•œë‹¤.
 
 #include"eEventCallbackTrigger.h"
 #include"EventArgs.h"
@@ -26,7 +26,7 @@ public:
 	static EventCallbackManager* instance();
 	EventCallbackManager() {};
 	~EventCallbackManager();
-	// º¹»ç »ı¼ºÀÚ¿Í ´ëÀÔ ¿¬»êÀÚ¸¦ »èÁ¦ÇÏ¿© ½Ì±ÛÅæÀÇ °íÀ¯¼ºÀ» º¸Àå
+	// ë³µì‚¬ ìƒì„±ìì™€ ëŒ€ì… ì—°ì‚°ìë¥¼ ì‚­ì œí•˜ì—¬ ì‹±ê¸€í†¤ì˜ ê³ ìœ ì„±ì„ ë³´ì¥
 	EventCallbackManager(const EventCallbackManager&) = delete;
 	EventCallbackManager& operator=(const EventCallbackManager&) = delete;
 

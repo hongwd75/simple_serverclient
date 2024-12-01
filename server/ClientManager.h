@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Client.h"
 #include <websocketpp/server.hpp>
 #include<unordered_map>

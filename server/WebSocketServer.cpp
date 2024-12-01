@@ -1,4 +1,4 @@
-#include "WebSocketServer.h"
+ï»¿#include "WebSocketServer.h"
 #include "ServerMain.h"
 
 WebSocketServer::WebSocketServer() : connectSessions(this)
@@ -8,26 +8,33 @@ WebSocketServer::WebSocketServer() : connectSessions(this)
 	socketInstance.set_fail_handler(std::bind(&WebSocketServer::OnDisconnect, this, std::placeholders::_1));
 	socketInstance.set_message_handler(std::bind(&WebSocketServer::OnRecive, this, std::placeholders::_1, std::placeholders::_2));
 	socketInstance.init_asio();
+	socketInstance.set_reuse_addr(true);
 }
 
-void WebSocketServer::Start(uint16_t port)
+void WebSocketServer::Start(uint16_t port, int threadsize)
 {
-	socketInstance.clear_access_channels(websocketpp::log::alevel::all);
-	socketInstance.set_error_channels(websocketpp::log::elevel::all);  // ¸ğµç ¿¡·¯ ·Î±×
+	socketInstance.clear_access_channels(websocketpp::log::alevel::all); 
+	socketInstance.set_error_channels(websocketpp::log::elevel::all);  // ëª¨ë“  ì—ëŸ¬ ë¡œê·¸
 	socketInstance.listen(port);
 	socketInstance.start_accept();
-	socketioThread = std::thread([&]() {
-		socketInstance.run();
-		});
+
+	for (int i = 0; i < threadsize; ++i) {
+		socketioThread.push_back(std::thread([this]() {
+			socketInstance.get_io_service().run();
+			}));
+	}
 }
 
 void WebSocketServer::Stop()
 {
 	socketInstance.stop();
-	if (socketioThread.joinable() == true)
-	{
-		socketioThread.join();
+	for (auto& t : socketioThread) {
+		if (t.joinable() == true)
+		{
+			t.join();
+		}
 	}
+
 }
 
 void WebSocketServer::Send(websocketpp::connection_hdl hdl, const char* data, size_t datasize)
@@ -97,7 +104,7 @@ void WebSocketServer::OnRecive(websocketpp::connection_hdl hdl, websocketpp::ser
 	else
 	{
 		std::string text_payload = recvdata->get_payload();
-		std::cout << "¼ö½ÅÇÑ ÅØ½ºÆ® ¸Ş½ÃÁö: " << text_payload << std::endl;
+		std::cout << "ìˆ˜ì‹ í•œ í…ìŠ¤íŠ¸ ë©”ì‹œì§€: " << text_payload << std::endl;
 	}
 }
 

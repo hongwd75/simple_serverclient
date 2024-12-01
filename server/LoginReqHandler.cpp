@@ -1,4 +1,4 @@
-#include "LoginReqHandler.h"
+ï»¿#include "LoginReqHandler.h"
 #include "ServerMain.h"
 
 LockManager LoginReqHandler::lockman;
@@ -26,7 +26,7 @@ void LoginReqHandler::HandlePacket( Client* user, const::flatbuffers::Vector<uin
 }
 
 /* ----------------------------------------------------------------------------------
-   ³»ºÎ ·ÎÁ÷
+   ë‚´ë¶€ ë¡œì§
    ---------------------------------------------------------------------------------- */
 void LoginReqHandler::sendLoginAns(Client* user,int errorcode)
 {
@@ -44,7 +44,7 @@ void LoginReqHandler::check_login(Client* user, const std::string& id, const std
 {
 	lockman.EnterLock(id);
 
-	// ·Î±×ÀÎ Ã¼Å© ·ÎÁ÷ (¿©±â¼­´Â °£´ÜÈ÷ ÇÏµåÄÚµùµÈ Ã¼Å©)
+	// ë¡œê·¸ì¸ ì²´í¬ ë¡œì§ (ì—¬ê¸°ì„œëŠ” ê°„ë‹¨ížˆ í•˜ë“œì½”ë”©ëœ ì²´í¬)
 	uint64_t DB_uid = atoi(pwd.c_str());
 	auto socketInstance = ServerMain::instance()->SocketMan()->GetSocketpp();
 	auto connectSessions = ServerMain::instance()->SocketMan()->GetClientManager();
@@ -56,25 +56,25 @@ void LoginReqHandler::check_login(Client* user, const std::string& id, const std
 		auto newuser = connectSessions->GetClientByUID(DB_uid);
 		if (newuser != nullptr)
 		{
-			// ÀÌ¹Ì Á¢¼ÓÁßÀÎ »óÅÂ°¡ ÀÖ´Ù.
+			// ì´ë¯¸ ì ‘ì†ì¤‘ì¸ ìƒíƒœê°€ ìžˆë‹¤.
 			if (newuser->GetSocket().expired() == true)
 			{
-				// ÀçÁ¢¼Ó °¡´É
+				// ìž¬ì ‘ì† ê°€ëŠ¥
 				connectSessions->ChangeSocketSession(DB_uid, user->GetSocket());
 
-				// ÀçÁ¢¼Ó¿¡ ÇÊ¿äÇÑ Á¤º¸ ´Ù½Ã Àü¼ÛÇØÁà¾ß ÇÑ´Ù.
+				// ìž¬ì ‘ì†ì— í•„ìš”í•œ ì •ë³´ ë‹¤ì‹œ ì „ì†¡í•´ì¤˜ì•¼ í•œë‹¤.
 				if (newuser->GetPlayerState() == Enums::ClientState::Room)
 				{
-					// ¸Þ½ÃÁö Àü¼Û
+					// ë©”ì‹œì§€ ì „ì†¡
 					sendLoginAns(newuser, 0);
 				}
 			}
 			else
 			{
 
-				// Å±!
+				// í‚¥!
 				socketInstance->close(user->GetSocket(), websocketpp::close::status::normal, "dual login");
-				std::cout << "    * Áßº¹·Î±×ÀÎ : " << id.c_str() << std::endl;
+				std::cout << "    * ì¤‘ë³µë¡œê·¸ì¸ : " << id.c_str() << std::endl;
 
 				lockman.ExitLock(id);
 				connectSessions->Unlock();
@@ -93,7 +93,7 @@ void LoginReqHandler::check_login(Client* user, const std::string& id, const std
 				user->SetAccount(&connectuserinfo);
 				connectSessions->AddLoginedUser(user);
 				user->SetPlayerState(Enums::ClientState::Lobby);
-				// ¸Þ½ÃÁö Àü¼Û
+				// ë©”ì‹œì§€ ì „ì†¡
 				sendLoginAns(user, 0);
 			}
 		}
@@ -101,7 +101,7 @@ void LoginReqHandler::check_login(Client* user, const std::string& id, const std
 	}
 	else
 	{
-		// Á¢¼Ó ²÷¾î
+		// ì ‘ì† ëŠì–´
 		socketInstance->close(user->GetSocket(), websocketpp::close::status::normal, "login failed");
 	}
 

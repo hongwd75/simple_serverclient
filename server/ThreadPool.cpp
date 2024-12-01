@@ -1,4 +1,4 @@
-#include "ThreadPool.h"
+ï»¿#include "ThreadPool.h"
 
 void TaskManager::addSocketTask(std::function<void()> task)
 {
@@ -21,9 +21,9 @@ std::future<std::string> TaskManager::addDBTask(std::function<std::string()> tas
 
 std::string TaskManager::executeDBQuery(const std::string& query)
 {
-    std::cout << "DB ½º·¹µå¿¡¼­ Äõ¸® ½ÇÇà Áß: " << query << std::endl;
-    boost::this_thread::sleep(boost::posix_time::seconds(2));  // DB Äõ¸® ½Ã¹Ä·¹ÀÌ¼Ç
-    return "Äõ¸® °á°ú";  // ½ÇÁ¦·Î´Â ¿©±â¼­ µ¥ÀÌÅÍº£ÀÌ½º Äõ¸®¸¦ ¼öÇàÇÏ°í °á°ú¸¦ ¹ÝÈ¯ÇØ¾ß ÇÕ´Ï´Ù
+    std::cout << "DB ìŠ¤ë ˆë“œì—ì„œ ì¿¼ë¦¬ ì‹¤í–‰ ì¤‘: " << query << std::endl;
+    boost::this_thread::sleep(boost::posix_time::seconds(2));  // DB ì¿¼ë¦¬ ì‹œë®¬ë ˆì´ì…˜
+    return "ì¿¼ë¦¬ ê²°ê³¼";  // ì‹¤ì œë¡œëŠ” ì—¬ê¸°ì„œ ë°ì´í„°ë² ì´ìŠ¤ ì¿¼ë¦¬ë¥¼ ìˆ˜í–‰í•˜ê³  ê²°ê³¼ë¥¼ ë°˜í™˜í•´ì•¼ í•©ë‹ˆë‹¤
 }
 
 void TaskManager::addFunctionTask(std::function<void()> task)

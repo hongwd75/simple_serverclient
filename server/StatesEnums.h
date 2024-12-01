@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 namespace Enums
 { 
 	enum class ClientState
@@ -13,7 +13,7 @@ namespace Enums
 
 	enum class LoginResult
 	{
-		none = 0, // ·Î±×ÀÎ ¼º°ø
+		none = 0, // ë¡œê·¸ì¸ ì„±ê³µ
 		Relog,
 		LgoinError = 100,
 		DualLogin1,

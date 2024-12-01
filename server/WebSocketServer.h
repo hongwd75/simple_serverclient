@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifdef USE_TLS
 #include <websocketpp/config/asio_tls.hpp>
 #else
@@ -17,7 +17,7 @@ class WebSocketServer
 {
 public:
 	WebSocketServer();
-	void Start(uint16_t port);
+	void Start(uint16_t port,int threadsize);
 	void Stop();
 	void Send(websocketpp::connection_hdl hdl, const char* data, size_t datasize);
 
@@ -30,7 +30,7 @@ private:
 	void OnRecive(websocketpp::connection_hdl hdl, websocketpp::server<websocketpp::config::asio>::message_ptr recvdata);
 
 private:
-	std::thread socketioThread;
+	std::vector<std::thread> socketioThread;
 	websocketpp::server<websocketpp::config::asio> socketInstance;
 	ClientManager connectSessions;
 };

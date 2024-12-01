@@ -1,4 +1,4 @@
-#include "ClientManager.h"
+ï»¿#include "ClientManager.h"
 #include "ConsoleDisplay.h"
 #include "WebSocketServer.h"
 
@@ -10,7 +10,7 @@ ClientManager::ClientManager(WebSocketServer* _server): server(_server), ClientS
 }
 
 //----------------------------------------------------------------------------------
-#pragma region ¼ÒÄÏ ¼¼¼Ç °ü¸®
+#pragma region ì†Œì¼“ ì„¸ì…˜ ê´€ë¦¬
 bool ClientManager::AddSession(websocketpp::connection_hdl hdl)
 {
 	if (emptyClientSlot.empty() == false)
@@ -20,7 +20,7 @@ bool ClientManager::AddSession(websocketpp::connection_hdl hdl)
 		sock2Client.insert({ hdl, slot });
 		emptyClientSlot.pop();
 
-		// ToDo. ÀÌÈÄ ÄÚµå °íµµÈ­·Î Á¢¼Ó ´ë±âÇÏ´Â ¼ÒÄÏÀº ¸ğµÎ »èÁ¦ÇÏ°Ô ÇØ¾ß ÇÑ´Ù.
+		// ToDo. ì´í›„ ì½”ë“œ ê³ ë„í™”ë¡œ ì ‘ì† ëŒ€ê¸°í•˜ëŠ” ì†Œì¼“ì€ ëª¨ë‘ ì‚­ì œí•˜ê²Œ í•´ì•¼ í•œë‹¤.
 		// waitloginSession.push_back(hdl);
 		return true;
 	}
@@ -54,7 +54,7 @@ bool ClientManager::ChangeSocketSession(uint64_t uid, websocketpp::connection_hd
 				sock2Client.erase(oldSocketItr);
 			}
 
-			// »õ ¿¬°á µî·Ï
+			// ìƒˆ ì—°ê²° ë“±ë¡
 			client->SetSocket(newsocket);
 			sock2Client[newsocket] = sessionId;
 			return true;
@@ -75,7 +75,7 @@ void ClientManager::RemoveSession(websocketpp::connection_hdl hdl)
 			int sessionid = ptr->GetSessionID();
 			if (ptr->GetPlayerState() == Enums::ClientState::Room)
 			{
-				// ·ë¿¡ ÀÖ´Â ÇÃ·¹ÀÌ¾î´Â ÀçÁ¢¼Ó ÈÄ, ÇÃ·¹ÀÌ°¡ °è¼Ó ÀÌ¾îÁ®¾ß ÇÑ´Ù.
+				// ë£¸ì— ìˆëŠ” í”Œë ˆì´ì–´ëŠ” ì¬ì ‘ì† í›„, í”Œë ˆì´ê°€ ê³„ì† ì´ì–´ì ¸ì•¼ í•œë‹¤.
 			}
 			else
 			{
@@ -130,13 +130,13 @@ void ClientManager::RemoveSeesionByUUID(uint64_t uid)
 #pragma endregion
 
 //----------------------------------------------------------------------------------
-#pragma region Å¬¶óÀÌ¾ğÆ® Ãß°¡/»èÁ¦/¾ò±â
+#pragma region í´ë¼ì´ì–¸íŠ¸ ì¶”ê°€/ì‚­ì œ/ì–»ê¸°
 std::vector<Client*> ClientManager::GetRangeUsers(Structs::Vector3 pos, int range)
 {
 	std::vector<Client*> rangeusers;
 	for (const auto& client : Clients) {
 
-		int client_data = client.second;  // Å¬¶óÀÌ¾ğÆ® µ¥ÀÌÅÍ (¿¹: ÇØ´ç ½Ã°£¿¡ °ü·ÃµÈ Á¤º¸)
+		int client_data = client.second;  // í´ë¼ì´ì–¸íŠ¸ ë°ì´í„° (ì˜ˆ: í•´ë‹¹ ì‹œê°„ì— ê´€ë ¨ëœ ì •ë³´)
 		auto user = ClientSlot[client_data].get();
 		if (user != nullptr)
 		{

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<mutex>
 #include<string>
 #include"structs.h"
@@ -11,7 +11,7 @@ public:
 	void SetRealm(int _realm);
 	void UpdatePosition(int _heading,Vector3 pos);
 
-	void MoveRandom();	// Å×½ºÆ® ÄÚµå
+	void MoveRandom();	// í…ŒìŠ¤íŠ¸ ì½”ë“œ
 
 	const int GetSessionID() {	return session;	}
 	const Vector3 GetPosition()	{	return position; }
@@ -19,16 +19,16 @@ public:
 	const std::string GetName() { return name; }
 
 public:
-	float calc_heading(float x, float z); // ¹Ù¶óº¸´Â ¹æÇâ Ã³¸®
+	float calc_heading(float x, float z); // ë°”ë¼ë³´ëŠ” ë°©í–¥ ì²˜ë¦¬
 
 private:
 	int session;
-	int realm;				// 1,2,3    0:Àº Áß¸³
+	int realm;				// 1,2,3    0:ì€ ì¤‘ë¦½
 	std::string name;
 	Vector3 position;
 	int heading = 0;
 
-	// ÀÓ½Ã°ª
+	// ì„ì‹œê°’
 	int hp = 1000;
 	int maxhp = 1000;
 };

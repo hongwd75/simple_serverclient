@@ -1,4 +1,4 @@
-#include "ServerMain.h"
+ï»¿#include "ServerMain.h"
 #include "ConsoleDisplay.h"
 
 ServerMain* ServerMain::_intance = nullptr;
@@ -7,7 +7,7 @@ ServerMain* ServerMain::instance()
 #ifdef _DEBUG
 	if (ServerMain::_intance == nullptr)
 	{
-		ConsoleDisplay::Write(ConsoleDisplay::TYPE::Error, "    ServerMain ÃÊ±âÈ­ ¾øÀÌ ¿äÃ»ÇÏ°í ÀÖÀ½");
+		ConsoleDisplay::Write(ConsoleDisplay::TYPE::Error, "    ServerMain ì´ˆê¸°í™” ì—†ì´ ìš”ì²­í•˜ê³  ìˆìŒ");
 		DebugBreak();
 	}
 #endif
@@ -30,14 +30,14 @@ ServerMain::ServerMain()
 	_intance = this;
 	size_t core_count = boost::thread::hardware_concurrency();
 
-	ConsoleDisplay::WriteFormat(ConsoleDisplay::TYPE::Normal, "½º·¹µå Ç® »ı¼º(%d core)....", core_count);
+	ConsoleDisplay::WriteFormat(ConsoleDisplay::TYPE::Normal, "ìŠ¤ë ˆë“œ í’€ ìƒì„±(%d core)....", core_count);
 	task_manager = new TaskManager(core_count);
 
-	ConsoleDisplay::Write(ConsoleDisplay::TYPE::Normal, "¼­¹ö ¼ÒÄÏ ÃÊ±âÈ­ ÁøÇà");
+	ConsoleDisplay::Write(ConsoleDisplay::TYPE::Normal, "ì„œë²„ ì†Œì¼“ ì´ˆê¸°í™” ì§„í–‰");
 
 	try
 	{
-		serversocket.Start(1000);
+		serversocket.Start(1000,10);
 	}
 	catch (const std::exception& e)
 	{
@@ -53,6 +53,6 @@ ServerMain::~ServerMain()
 
 void ServerMain::Stop()
 {
-	ConsoleDisplay::Write(ConsoleDisplay::TYPE::Normal, "¼­¹ö ÁßÁö..");
+	ConsoleDisplay::Write(ConsoleDisplay::TYPE::Normal, "ì„œë²„ ì¤‘ì§€..");
 	serversocket.Stop();
 }

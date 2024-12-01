@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "EventCallbackManager.h"
 #include <functional>
 

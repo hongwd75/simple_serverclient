@@ -1,9 +1,9 @@
-#include "PacketHandlerFactory.h"
-//--- ÆÐÅ¶ ¸®½ºÆ® ½ÃÀÛ
+ï»¿#include "PacketHandlerFactory.h"
+//--- íŒ¨í‚· ë¦¬ìŠ¤íŠ¸ ì‹œìž‘
 #include "LoginReqHandler.h"
 #include "WorldJoinReqHandler.h"
 #include "UpdatePositionHandler.h"
-//--- ÆÐÅ¶ ¸®½ºÆ® Á¾·á
+//--- íŒ¨í‚· ë¦¬ìŠ¤íŠ¸ ì¢…ë£Œ
 
 #define REGISTERPACKET(packetType, handlerClass) \
     RegisterHandler(packetType, []() -> std::unique_ptr<PacketHandler> { \

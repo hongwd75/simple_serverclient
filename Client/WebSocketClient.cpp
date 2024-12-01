@@ -1,4 +1,4 @@
-#include "WebSocketClient.h"
+ï»¿#include "WebSocketClient.h"
 #include "PlayerManager.h"
 #include "EntityManager.h"
 
@@ -90,7 +90,7 @@ void WebSocketClient::send_message(const std::string& message) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÆÐÅ¶ Ã³¸®
+// íŒ¨í‚· ì²˜ë¦¬
 void WebSocketClient::HANDLE_PACKET_SC_LoginAns(const NetworkMessage::SC_LoginAns* packet)
 {
     Player *mine = new Player(packet->sessionid(), packet->nickname()->c_str(), 0);
@@ -98,8 +98,8 @@ void WebSocketClient::HANDLE_PACKET_SC_LoginAns(const NetworkMessage::SC_LoginAn
     EntityManager::instance().players.Add(packet->sessionid(), mine);
     EntityManager::instance().players.SetMySession(packet->sessionid());
 
-    std::cout << "·Î±×ÀÎ ¼º°ø: " << packet->nickname()->c_str() << std::endl;
-    std::cout << "¿ùµå ÁøÀÔ ½ÃÀÛ" << std::endl;
+    std::cout << "ë¡œê·¸ì¸ ì„±ê³µ: " << packet->nickname()->c_str() << std::endl;
+    std::cout << "ì›”ë“œ ì§„ìž… ì‹œìž‘" << std::endl;
 
     NetworkMessage::CS_WorldJoinReq_FBS req;
     req.gate = 0;
@@ -126,7 +126,7 @@ void WebSocketClient::HANDLE_PACKET_SC_CreatePlayer(const NetworkMessage::SC_Cre
     playermanager->Lock();
     playermanager->Add(packet->player()->sessionid(), player);
     playermanager->UnLock();
-    std::cout << " - ÇÃ·¹ÀÌ¾î ÀÔÀå : " << packet->player()->name()->c_str() << std::endl;
+    std::cout << " - í”Œë ˆì´ì–´ ìž…ìž¥ : " << packet->player()->name()->c_str() << std::endl;
 }
 
 void WebSocketClient::HANDLE_PACKET_SC_CreatePlayers(const NetworkMessage::SC_CreatePlayers* packet)
@@ -137,7 +137,7 @@ void WebSocketClient::HANDLE_PACKET_SC_CreatePlayers(const NetworkMessage::SC_Cr
         return;
 
     playermanager->Lock();
-    std::cout << "  - ÀÌ¹Ì ÀÖ´Â ÇÃ·¹ÀÌ¾î : " << playerArray->size() << "\n";
+    std::cout << "  - ì´ë¯¸ ìžˆëŠ” í”Œë ˆì´ì–´ : " << playerArray->size() << "\n";
     for (auto pinfo : *playerArray)
     {
         auto player = playermanager->getPlayer(pinfo->sessionid());
@@ -158,7 +158,7 @@ void WebSocketClient::HANDLE_PACKET_SC_CreatePlayers(const NetworkMessage::SC_Cr
         
         player->UpdatePosition(pinfo->head(), Vector3{ pinfo->position()->x(),pinfo->position()->y(),pinfo->position()->z() });
         
-        std::cout << "     ÇÃ·¹ÀÌ¾î : " << pinfo->name()->c_str() << "\n";
+        std::cout << "     í”Œë ˆì´ì–´ : " << pinfo->name()->c_str() << "\n";
     }
     playermanager->UnLock();
 

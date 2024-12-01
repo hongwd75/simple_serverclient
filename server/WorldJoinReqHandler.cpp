@@ -1,4 +1,4 @@
-#include "WorldJoinReqHandler.h"
+ï»¿#include "WorldJoinReqHandler.h"
 #include "ServerMain.h"
 
 void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
@@ -6,16 +6,16 @@ void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<
 	auto packet = flatbuffers::GetRoot<NetworkMessage::CS_WorldJoinReq>(recvdata->data());
 	if (packet != nullptr)
 	{
-		// zone Á¤º¸ Àü¼Û
+		// zone ì •ë³´ ì „ì†¡
 		NetworkMessage::SC_WorldEnterNotify_FBS enterinfo;
 		enterinfo.zoneid = 1;
 		user->Send(NetworkMessage::ServerPackets::ServerPackets_SC_WorldEnterNotify, &enterinfo);
 
 		bool reconnect = false;
-		// ´Ù¸¥ »ç¿ëÀÚ¿¡°Ô ¾Ë¸²
+		// ë‹¤ë¥¸ ì‚¬ìš©ìžì—ê²Œ ì•Œë¦¼
 		if (packet->gate() == 0)
 		{
-			// ÀÌ¹Ì Á¢¼ÓµÇ¾î ÀÖ¾úÀ½
+			// ì´ë¯¸ ì ‘ì†ë˜ì–´ ìžˆì—ˆìŒ
 			if (user->GetPlayerState() != Enums::ClientState::Room)
 			{
 				user->GetAccount()->UpdatePosition(rand() % 359, rand() % 300, 1, rand() % 300);
@@ -26,7 +26,7 @@ void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<
 			}
 		}
 
-		// ±âÁ¸ ÀÚ¸®¸¦ Ã£¾Æ¼­ ³Ñ°ÜÁà¾ß ÇÏÁö¸¸ Áö±ÝÀº ·£´ýÀ¸·Î 1~ 300 »çÀÌÀÇ °ªÀ» Àü´ÞÇÏÀÚ.
+		// ê¸°ì¡´ ìžë¦¬ë¥¼ ì°¾ì•„ì„œ ë„˜ê²¨ì¤˜ì•¼ í•˜ì§€ë§Œ ì§€ê¸ˆì€ ëžœë¤ìœ¼ë¡œ 1~ 300 ì‚¬ì´ì˜ ê°’ì„ ì „ë‹¬í•˜ìž.
 		NetworkMessage::SC_CreatePlayer_FBS req;
 		req.player = std::make_shared< NetworkMessage::CreatePlayerInfo_FBS>();
 		req.player->realm = user->GetAccount()->realm;
@@ -42,7 +42,7 @@ void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<
 		auto connectSessions = ServerMain::instance()->SocketMan()->GetClientManager();
 
 
-		// ¹üÀ§¸¦ Á¤ÇÏ´Â ÄÚµå°¡ ÀÖ¾î¾ß ÇÏÁö¸¸ ¿ì¼±Àº ¸ðµÎ¿¡°Ô ºê·ÎµåÄÉ½ºÆÃÇÏÀÚ
+		// ë²”ìœ„ë¥¼ ì •í•˜ëŠ” ì½”ë“œê°€ ìžˆì–´ì•¼ í•˜ì§€ë§Œ ìš°ì„ ì€ ëª¨ë‘ì—ê²Œ ë¸Œë¡œë“œì¼€ìŠ¤íŒ…í•˜ìž
 		user->SetPlayerState(Enums::ClientState::Room);
 		auto list = connectSessions->GetRangeUsers(user->GetAccount()->position, 1000);
 		for (auto snd : list)

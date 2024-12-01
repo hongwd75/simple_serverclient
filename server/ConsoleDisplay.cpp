@@ -1,4 +1,4 @@
-#include "ConsoleDisplay.h"
+ï»¿#include "ConsoleDisplay.h"
 #include <iostream>
 #include <vector>
 #include <cstdarg>
@@ -9,14 +9,14 @@ std::mutex log_mutex;
 void ConsoleDisplay::WriteFormat(TYPE logtype, const char* format, ...)
 {
 	std::lock_guard<std::mutex> lock(log_mutex);
-	// °¡º¯ ÀÎÀÚ ¸®½ºÆ® ÃÊ±âÈ­
+	// ê°€ë³€ ì¸ì ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
 	va_list args;
 	va_start(args, format);
 
-	// Æ÷¸ËµÈ ¸Ş½ÃÁö ¹öÆÛ
+	// í¬ë§·ëœ ë©”ì‹œì§€ ë²„í¼
 	int size = std::vsnprintf(nullptr, 0, format, args) + 1;
 	std::vector<char> buffer(size);
-	vsnprintf(buffer.data(), buffer.size(), format, args); // format°ú args¸¦ »ç¿ëÇØ Æ÷¸ËµÈ ¹®ÀÚ¿­ ÀÛ¼º
+	vsnprintf(buffer.data(), buffer.size(), format, args); // formatê³¼ argsë¥¼ ì‚¬ìš©í•´ í¬ë§·ëœ ë¬¸ìì—´ ì‘ì„±
 	va_end(args);
 
 	Write(logtype, buffer.data());

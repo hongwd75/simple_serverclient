@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "..\common\packets\networkmessages_generated.h"
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
@@ -27,7 +27,7 @@ public:
     std::shared_ptr<NetworkMessage::Vector3> Vector3Convert(Vector3 pos);
 
 public:
-    void SendLoginReq(const char* account, const char* pwd); // Á¢¼ÓÇÏ¸é ¹Ù·Î º¸³½´Ù.
+    void SendLoginReq(const char* account, const char* pwd); // ì ‘ì†í•˜ë©´ ë°”ë¡œ ë³´ë‚¸ë‹¤.
 
 private:
     void on_open(websocketpp::connection_hdl hdl);

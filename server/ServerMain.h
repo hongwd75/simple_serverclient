@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <mutex>
 #include "ThreadPool.h"
 #include "WebSocketServer.h"
 #include "PacketHandlerFactory.h"
 class ServerMain
 {
-	/* ¼­¹ö ¼³Á¤ */
+	/* ì„œë²„ ì„¤ì • */
 public:
 	const int server_port = 1000;
 	static ServerMain* instance();
