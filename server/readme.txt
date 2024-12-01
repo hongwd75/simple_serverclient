@@ -18,11 +18,11 @@ OpenSSL/BOOST를 위해서는 vcpkg를 설치하고 라이브러리를 받아야 한다.
 
 2. OpenSSL,BOOST,WebSocketpp 설치
       -------------------------------------------------------------------------
-      vcpkg install openssl:x64-windows
-      vcpkg install websocketpp
-      vcpkg install flatbuffers
-      vcpkg install boost:x64-windows
-      vcpkg install boost:x64-windows-static
+      .\vcpkg install openssl:x64-windows
+      .\vcpkg install websocketpp
+      .\vcpkg install flatbuffers
+      .\vcpkg install boost:x64-windows
+      .\vcpkg install boost:x64-windows-static
       -------------------------------------------------------------------------
 
 
