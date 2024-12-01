@@ -32,11 +32,15 @@ public:
 	bool ChangeSocketSession(uint64_t uid, websocketpp::connection_hdl newsocket);
 
 	void RemoveSession(websocketpp::connection_hdl hdl);
-	void RemoveSeesionByUUID(uint64_t uid);
+	void RemoveSessionByUUID(uint64_t uid);
 
 public:
-	void Lock() { session_mutex.lock(); }
-	void Unlock() { session_mutex.unlock(); }
+	template<typename Func>
+	void ExecuteWithLock(Func&& func) {
+		std::lock_guard<std::mutex> lock(session_mutex);
+		func();
+	}
+
 	std::vector<Client*> GetRangeUsers(Structs::Vector3 pos, int range);
 
 public:

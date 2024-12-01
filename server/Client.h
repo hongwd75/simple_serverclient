@@ -15,7 +15,7 @@ class Client
 {
 public:
 	Client(websocketpp::connection_hdl hdl,int sessionid, WebSocketServer* svr);
-	
+	void RestSocket();
 	void SetSocket(websocketpp::connection_hdl sock);
 	void SetAccount(Account* info);
 	void SetPlayerState(Enums::ClientState st);

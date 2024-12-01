@@ -13,6 +13,11 @@ Client::Client(websocketpp::connection_hdl hdl, int sessionid, WebSocketServer *
 {
 }
 
+void Client::RestSocket()
+{
+	connection.reset();
+}
+
 websocketpp::connection_hdl Client::GetSocket()
 {
 	return connection;
@@ -65,10 +70,7 @@ void Client::SendInternal(const char* data, size_t size)
 {
 	try
 	{
-		if (auto conn = connection.lock())
-		{
-			_svr->Send(conn, data, size);
-		}
+		_svr->Send(connection, data, size);
 	}
 	catch (const std::exception&)
 	{

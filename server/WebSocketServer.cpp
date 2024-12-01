@@ -41,11 +41,20 @@ void WebSocketServer::Send(websocketpp::connection_hdl hdl, const char* data, si
 {
 	try
 	{
-		socketInstance.send(hdl, data, datasize, websocketpp::frame::opcode::binary);
+		if (socketInstance.get_con_from_hdl(hdl)->get_state() == websocketpp::session::state::open)
+		{
+			socketInstance.send(hdl, data, datasize, websocketpp::frame::opcode::binary);
+		}
+		
 	}
-	catch (const std::exception&)
+	catch (const std::exception&e)
 	{
-		connectSessions.RemoveSession(hdl);
+		if(hdl.expired() == false)
+			connectSessions.RemoveSession(hdl);
+		else
+		{
+			OutputDebugStringA(e.what());
+		}
 	}
 }
 
@@ -92,13 +101,15 @@ void WebSocketServer::OnRecive(websocketpp::connection_hdl hdl, websocketpp::ser
 			auto packetType = packetWarpper->type();
 			auto packetData = packetWarpper->packet();
 			
-			connectSessions.Lock();
-			auto target = connectSessions.GetClient(hdl);
-			if (target != nullptr)
-			{
-				target->OnRecive(packetType, packetData);
-			}
-			connectSessions.Unlock();
+			connectSessions.ExecuteWithLock([&]() 
+				{
+					auto target = connectSessions.GetClient(hdl);
+					if (target != nullptr)
+					{
+						target->OnRecive(packetType, packetData);
+					}
+				});
+
 		}
 	}
 	else

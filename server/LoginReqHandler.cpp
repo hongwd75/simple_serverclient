@@ -52,52 +52,48 @@ void LoginReqHandler::check_login(Client* user, const std::string& id, const std
 	auto lockedhdl = user->GetSocket().lock();
 	if (DB_uid > 0)
 	{
-		connectSessions->Lock();
-		auto newuser = connectSessions->GetClientByUID(DB_uid);
-		if (newuser != nullptr)
-		{
-			// 이미 접속중인 상태가 있다.
-			if (newuser->GetSocket().expired() == true)
+		connectSessions->ExecuteWithLock([&]() 
 			{
-				// 재접속 가능
-				connectSessions->ChangeSocketSession(DB_uid, user->GetSocket());
-
-				// 재접속에 필요한 정보 다시 전송해줘야 한다.
-				if (newuser->GetPlayerState() == Enums::ClientState::Room)
+				auto newuser = connectSessions->GetClientByUID(DB_uid);
+				if (newuser != nullptr)
 				{
-					// 메시지 전송
-					sendLoginAns(newuser, 0);
+					// 이미 접속중인 상태가 있다.
+					if (newuser->GetSocket().expired() == true)
+					{
+						// 재접속 가능
+						connectSessions->ChangeSocketSession(DB_uid, user->GetSocket());
+
+						// 재접속에 필요한 정보 다시 전송해줘야 한다.
+						if (newuser->GetPlayerState() == Enums::ClientState::Room)
+						{
+							// 메시지 전송
+							sendLoginAns(newuser, 0);
+						}
+					}
+					else
+					{
+						// 킥!
+						socketInstance->close(user->GetSocket(), websocketpp::close::status::normal, "dual login");
+					}
+
 				}
-			}
-			else
-			{
+				else
+				{
+					if (user != nullptr)
+					{
+						Account connectuserinfo;
+						connectuserinfo.UID = DB_uid;
+						connectuserinfo.AccountName = id;
+						connectuserinfo.realm = (DB_uid % 3) + 1;
+						user->SetAccount(&connectuserinfo);
+						connectSessions->AddLoginedUser(user);
+						user->SetPlayerState(Enums::ClientState::Lobby);
+						// 메시지 전송
+						sendLoginAns(user, 0);
+					}
+				}
+			});
 
-				// 킥!
-				socketInstance->close(user->GetSocket(), websocketpp::close::status::normal, "dual login");
-				std::cout << "    * 중복로그인 : " << id.c_str() << std::endl;
-
-				lockman.ExitLock(id);
-				connectSessions->Unlock();
-				return;
-			}
-			
-		}
-		else
-		{
-			if (user != nullptr)
-			{
-				Account connectuserinfo;
-				connectuserinfo.UID = DB_uid;
-				connectuserinfo.AccountName = id;
-				connectuserinfo.realm = (DB_uid % 3) + 1;
-				user->SetAccount(&connectuserinfo);
-				connectSessions->AddLoginedUser(user);
-				user->SetPlayerState(Enums::ClientState::Lobby);
-				// 메시지 전송
-				sendLoginAns(user, 0);
-			}
-		}
-		connectSessions->Unlock();
 	}
 	else
 	{

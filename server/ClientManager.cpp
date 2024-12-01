@@ -73,17 +73,19 @@ void ClientManager::RemoveSession(websocketpp::connection_hdl hdl)
 		if (ptr != nullptr)
 		{
 			int sessionid = ptr->GetSessionID();
-			if (ptr->GetPlayerState() == Enums::ClientState::Room)
-			{
-				// 룸에 있는 플레이어는 재접속 후, 플레이가 계속 이어져야 한다.
-			}
-			else
+			//if (ptr->GetPlayerState() == Enums::ClientState::Room)
+			//{
+			//	// 룸에 있는 플레이어는 재접속 후, 플레이가 계속 이어져야 한다.
+			//	ptr->RestSocket();
+			//}
+			//else
 			{
 				auto uid = ptr->GetAccount()->UID;
 				if (uid > 0)
 				{
 					Clients.erase(uid);
 				}
+				ClientSlot[sessionid].reset();
 				ClientSlot[sessionid] = nullptr;
 				emptyClientSlot.push(sessionid);
 			}
@@ -92,7 +94,7 @@ void ClientManager::RemoveSession(websocketpp::connection_hdl hdl)
 	}
 }
 
-void ClientManager::RemoveSeesionByUUID(uint64_t uid)
+void ClientManager::RemoveSessionByUUID(uint64_t uid)
 {
 	if (uid < 1)
 	{
