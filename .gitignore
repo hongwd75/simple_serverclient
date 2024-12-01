@@ -1,0 +1,12 @@
+/Client/Debug
+/.vs/ServerClient/v16
+/Debug
+server/Debug
+unity/viewer/.idea
+unity/viewer/Library/Artifacts
+unity/viewer/Library
+unity/viewer/Temp
+unity/viewer/Logs
+unity/viewer/obj/Debug
+unity/viewer/UserSettings
+run.bat
