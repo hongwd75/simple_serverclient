@@ -48,6 +48,11 @@ Account* Client::GetAccount()
 	return &m_account;
 }
 
+void Client::Send(flatbuffers::FlatBufferBuilder &packet)
+{
+	SendInternal(reinterpret_cast<const char*>(packet.GetBufferPointer()), packet.GetSize());
+}
+
 void Client::OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uint8_t>* packetData)
 {
 	auto packetprocessor = PacketHandlerFactory::Instance().GetHandler((NetworkMessage::ClientPackets)packetType);

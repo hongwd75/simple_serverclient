@@ -7,7 +7,7 @@
 #include "Account.h"
 #include <websocketpp/server.hpp>
 #include "ConsoleDisplay.h"
-
+#include "FlatBufferUtil.h"
 
 class WebSocketServer;
 
@@ -29,6 +29,7 @@ public:
 public:
 	template<typename T>
 	void Send(NetworkMessage::ServerPackets packetid, const T* message);
+	void Send(flatbuffers::FlatBufferBuilder &packet);
 	void OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uint8_t>* packetData);
 
 private:
@@ -51,21 +52,7 @@ private:
 template<typename T>
 inline void Client::Send(NetworkMessage::ServerPackets packetid, const T* message)
 {
-	flatbuffers::FlatBufferBuilder builder;
-	auto serialized_message = T::TableType::Pack(builder, message);
-	builder.Finish(serialized_message);
-
-	std::vector<uint8_t> packet_data(builder.GetBufferPointer(), builder.GetBufferPointer() + builder.GetSize());
-
-	NetworkMessage::PacketWrapper_FBS pack;
-	pack.type = packetid;
-	pack.packet = packet_data;
-
-
-	flatbuffers::FlatBufferBuilder builder2;
-	auto serialized_message2 = NetworkMessage::PacketWrapper::Pack(builder2, &pack);
-	builder2.Finish(serialized_message2);
-
-	SendInternal(reinterpret_cast<const char*>(builder2.GetBufferPointer()), builder2.GetSize());
+	auto packet = FlatBufferUtil::MakeProtocal(packetid, message);
+	Send(packet);
 }
 #endif // CLIENT_H

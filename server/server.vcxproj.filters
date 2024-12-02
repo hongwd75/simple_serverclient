@@ -52,6 +52,9 @@
     <Filter Include="소스 파일\Base\Network\Packet\Handler">
       <UniqueIdentifier>{a13388ac-39be-48cf-b46f-0ce67b99b6ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Base\Network\Utility">
+      <UniqueIdentifier>{c65869cf-3d45-4475-b285-acabd477a5bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="UpdatePositionHandler.cpp">
       <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="FlatBufferUtil.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="UpdatePositionHandler.h">
       <Filter>소스 파일\Base\Network\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="FlatBufferUtil.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

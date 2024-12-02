@@ -1,8 +1,11 @@
 ﻿#include "UpdatePositionHandler.h"
 #include "ServerMain.h"
+#include "FlatBufferUtil.h"
+#include <chrono>
 
 void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
 {
+	auto start = std::chrono::high_resolution_clock::now();
 	auto packet = flatbuffers::GetRoot<NetworkMessage::CS_UpdatePosition>(recvdata->data());
 	user->GetAccount()->UpdatePosition(packet->head(), packet->position()->x(), packet->position()->y(), packet->position()->z());
 
@@ -17,11 +20,15 @@ void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vecto
 	req.head = user->GetAccount()->heading;
 	req.position = Vector3Convert(user->GetAccount()->position);
 
+	auto sendpacket = FlatBufferUtil::MakeProtocal(NetworkMessage::ServerPackets::ServerPackets_SC_UpdatePosition, &req);
 	for (auto player : plist)
 	{
 		if (player != user)
 		{
-			player->Send(NetworkMessage::ServerPackets::ServerPackets_SC_UpdatePosition, &req);
+			player->Send(sendpacket);
 		}
 	}
+	auto end = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	std::cout << "함수 실행 시간: " << duration.count() << " 마이크로초" << std::endl;
 }

@@ -153,6 +153,7 @@
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="ConsoleDisplay.cpp" />
     <ClCompile Include="EventCallbackManager.cpp" />
+    <ClCompile Include="FlatBufferUtil.cpp" />
     <ClCompile Include="LoginReqHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PacketHandlerFactory.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventCallbackManager.h" />
     <ClInclude Include="EventCallbackManager_impl.h" />
+    <ClInclude Include="FlatBufferUtil.h" />
     <ClInclude Include="LoginReqHandler.h" />
     <ClInclude Include="PacketHandlerFactory.h" />
     <ClInclude Include="PacketHandler.h" />
