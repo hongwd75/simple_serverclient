@@ -21,14 +21,14 @@ void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vecto
 	req.position = Vector3Convert(user->GetAccount()->position);
 
 	auto sendpacket = FlatBufferUtil::MakeProtocal(NetworkMessage::ServerPackets::ServerPackets_SC_UpdatePosition, &req);
-	for (auto player : plist)
-	{
-		if (player != user)
-		{
-			player->Send(sendpacket);
-		}
-	}
-	auto end = std::chrono::high_resolution_clock::now();
-	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-	std::cout << "함수 실행 시간: " << duration.count() << " 마이크로초" << std::endl;
+	auto sendlist = connectSessions->GetConnectVector(plist, user);
+
+	auto end1 = std::chrono::high_resolution_clock::now();
+
+	ServerMain::instance()->SocketMan()->SendBroadcast(sendlist, sendpacket);
+	
+	auto end2 = std::chrono::high_resolution_clock::now();
+	auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start);
+	auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>(end2 - end1);
+	std::cout << "함수 실행 시간: " << duration1.count() + duration2.count() << " 마이크로초  " <<  duration1.count() << " / " << duration2.count() << std::endl;
 }

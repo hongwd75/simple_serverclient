@@ -169,6 +169,19 @@ std::vector<Client*> ClientManager::GetRangeUsers(Structs::Vector3 pos, int rang
 	return rangeusers;
 }
 
+std::vector<websocketpp::connection_hdl> ClientManager::GetConnectVector(std::vector<Client*> list, Client* remove)
+{
+	std::vector<websocketpp::connection_hdl> ret;
+	for (auto player : list)
+	{
+		if (player != remove)
+		{
+			ret.push_back(player->GetSocket());
+		}
+	}
+	return ret;
+}
+
 Client* ClientManager::GetClientByUID(uint64_t uid)
 {
 	auto itr = Clients.find(uid);

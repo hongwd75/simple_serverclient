@@ -52,7 +52,7 @@ public:
 	}
 
 	std::vector<Client*> GetRangeUsers(Structs::Vector3 pos, int range);
-
+	std::vector< websocketpp::connection_hdl> GetConnectVector(std::vector<Client*> list, Client* remove);
 public:
 	Client *GetClientByUID(uint64_t uid);
 	Client *GetClient(websocketpp::connection_hdl hdl);

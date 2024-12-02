@@ -2,32 +2,44 @@
 #include "ServerMain.h"
 #include "EventCallbackManager.h"
 
+
 WebSocketServer::WebSocketServer() : connectSessions(this)
 {
+	socketInstance.init_asio();
 	socketInstance.set_open_handler(std::bind(&WebSocketServer::OnConnect, this, std::placeholders::_1));
 	socketInstance.set_close_handler(std::bind(&WebSocketServer::OnDisconnect, this, std::placeholders::_1));
 	socketInstance.set_fail_handler(std::bind(&WebSocketServer::OnDisconnect, this, std::placeholders::_1));
 	socketInstance.set_message_handler(std::bind(&WebSocketServer::OnRecive, this, std::placeholders::_1, std::placeholders::_2));
-	socketInstance.init_asio();
-	socketInstance.set_reuse_addr(true);
+	
 }
 
 void WebSocketServer::Start(uint16_t port, int threadsize)
 {
+	// 작업 쓰레드 생성
+	for (int i = 0; i < threadsize; ++i) {
+		workerThreads.emplace_back(&WebSocketServer::WorkerThread, this);
+	}
+
 	socketInstance.clear_access_channels(websocketpp::log::alevel::all); 
 	socketInstance.set_error_channels(websocketpp::log::elevel::all);  // 모든 에러 로그
 	socketInstance.listen(port);
 	socketInstance.start_accept();
 
-	for (int i = 0; i < threadsize; ++i) {
-		socketioThread.push_back(std::thread([this]() {
-			socketInstance.get_io_service().run();
-			}));
-	}
+	socketioThread.emplace_back([this] { socketInstance.run(); });
 }
 
 void WebSocketServer::Stop()
 {
+	running = false;
+	queueCv.notify_all();
+
+	// 작업 쓰레드 종료
+	for (auto& thread : workerThreads) {
+		if (thread.joinable()) {
+			thread.join();
+		}
+	}
+
 	socketInstance.stop();
 	for (auto& t : socketioThread) {
 		if (t.joinable() == true)
@@ -35,24 +47,69 @@ void WebSocketServer::Stop()
 			t.join();
 		}
 	}
-
+	socketioThread.clear();
 }
 
-void WebSocketServer::Send(websocketpp::connection_hdl hdl, const char* data, size_t datasize)
-{
-	try
-	{
-		if (socketInstance.get_con_from_hdl(hdl)->get_state() == websocketpp::session::state::open)
+void WebSocketServer::WorkerThread() {
+	while (running) {
+		std::function<void()> task;
 		{
-			socketInstance.send(hdl, data, datasize, websocketpp::frame::opcode::binary);
+			std::unique_lock<std::mutex> lock(queueMutex);
+			queueCv.wait(lock, [this] { return !taskQueue.empty() || !running; });
+
+			if (!running && taskQueue.empty()) {
+				break;
+			}
+
+			task = std::move(taskQueue.front());
+			taskQueue.pop();
 		}
-		
-	}
-	catch (const std::exception&e)
-	{
-		EventCallbackManager::instance()->Notify(EventCallback::eTrigger::RemoveClientNetworkHandle, nullptr, new ForceDisconnedEventArgs(hdl));
+
+		if (task) {
+			task();
+		}
 	}
 }
+
+
+void WebSocketServer::Send(websocketpp::connection_hdl hdl, const std::vector<uint8_t>& data)
+{
+	auto shared_data = std::make_shared<std::vector<uint8_t>>(data);
+	{
+		std::lock_guard<std::mutex> lock(queueMutex);
+		taskQueue.push([this, hdl, shared_data] {
+			try {
+				socketInstance.send(hdl, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
+			}
+			catch (const websocketpp::exception& e) {
+				// 예외 처리
+				std::cerr << "Send exception: " << e.what() << std::endl;
+			}
+			});
+	}
+	queueCv.notify_one();
+}
+
+void WebSocketServer::SendBroadcast(std::vector<websocketpp::connection_hdl>& clients, const std::vector<uint8_t>& data)
+{
+	auto shared_data = std::make_shared<std::vector<uint8_t>>(data);
+	{
+		std::lock_guard<std::mutex> lock(queueMutex);
+		for (auto& client : clients) {
+			taskQueue.push([this, client, shared_data] {
+				try {
+					socketInstance.send(client, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
+				}
+				catch (const websocketpp::exception& e) {
+					// 예외 처리
+					std::cerr << "Broadcast exception: " << e.what() << std::endl;
+				}
+				});
+		}
+	}
+	queueCv.notify_all();
+}
+
 
 ClientManager* WebSocketServer::GetClientManager()
 {

@@ -41,20 +41,19 @@ void WorldJoinReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<
 
 		auto connectSessions = ServerMain::instance()->SocketMan()->GetClientManager();
 
+		auto sendpacket = FlatBufferUtil::MakeProtocal(NetworkMessage::ServerPackets::ServerPackets_SC_CreatePlayer, &req);
 
 		// 범위를 정하는 코드가 있어야 하지만 우선은 모두에게 브로드케스팅하자
 		user->SetPlayerState(Enums::ClientState::Room);
+
 		auto list = connectSessions->GetRangeUsers(user->GetAccount()->position, 1000);
+		auto sendlist = connectSessions->GetConnectVector(list, user);
+
+		ServerMain::instance()->SocketMan()->SendBroadcast(sendlist, sendpacket);
+
+		// 이미 있는 플레이어 정보 전송
 		for (auto snd : list)
 		{
-			if (reconnect == false)
-			{
-				if (snd != user)
-				{
-					snd->Send(NetworkMessage::ServerPackets::ServerPackets_SC_CreatePlayer, &req);
-				}
-			}
-
 			auto playerobject = std::make_shared<NetworkMessage::CreatePlayerInfo_FBS>();
 			playerobject->sessionid = snd->GetSessionID();
 			playerobject->head = snd->GetAccount()->heading;

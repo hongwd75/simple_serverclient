@@ -7,6 +7,7 @@ void EntityManager::ConnectToServer()
 
 void EntityManager::CloseSocket()
 {
+	AI.Sleep();
 	client.close();
 }
 

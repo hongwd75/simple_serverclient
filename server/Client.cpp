@@ -48,10 +48,6 @@ Account* Client::GetAccount()
 	return &m_account;
 }
 
-void Client::Send(flatbuffers::FlatBufferBuilder &packet)
-{
-	SendInternal(reinterpret_cast<const char*>(packet.GetBufferPointer()), packet.GetSize());
-}
 
 void Client::OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uint8_t>* packetData)
 {
@@ -63,11 +59,11 @@ void Client::OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uin
 }
 
 
-void Client::SendInternal(const char* data, size_t size)
+void Client::Send(const std::vector<uint8_t>& data)
 {
 	try
 	{
-		_svr->Send(connection, data, size);
+		_svr->Send(connection, data);
 	}
 	catch (const std::exception&)
 	{

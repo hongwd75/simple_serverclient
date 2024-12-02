@@ -31,6 +31,7 @@ public:
 
 private:
     void on_open(websocketpp::connection_hdl hdl);
+    void on_close(websocketpp::connection_hdl hdl);
     void OnRecive(websocketpp::connection_hdl, client::message_ptr msg);
     void OnBinaryRecive(const char* buffer);
 

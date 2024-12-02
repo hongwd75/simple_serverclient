@@ -29,11 +29,11 @@ public:
 public:
 	template<typename T>
 	void Send(NetworkMessage::ServerPackets packetid, const T* message);
-	void Send(flatbuffers::FlatBufferBuilder &packet);
+	void Send(const std::vector<uint8_t>& data);
 	void OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uint8_t>* packetData);
 
 private:
-	void SendInternal(const char* data, size_t size);
+	
 	void Log(const char* msg);
 
 private:

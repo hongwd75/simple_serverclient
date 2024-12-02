@@ -13,6 +13,7 @@ WebSocketClient::WebSocketClient() {
     client_instance.init_asio();
     client_instance.set_open_handler(bind(&WebSocketClient::on_open, this, std::placeholders::_1));
     client_instance.set_message_handler(bind(&WebSocketClient::OnRecive, this, std::placeholders::_1, std::placeholders::_2));
+    client_instance.set_close_handler(bind(&WebSocketClient::on_close, this, std::placeholders::_1));
     client_instance.clear_access_channels(websocketpp::log::alevel::all);
 }
 
@@ -50,6 +51,10 @@ void WebSocketClient::on_open(websocketpp::connection_hdl hdl)
     connection_hdl = hdl;
     std::cout << "Connected to server." << std::endl;
     SendLoginReq(EntityManager::instance().accountid.c_str(), EntityManager::instance().password.c_str());
+}
+
+void WebSocketClient::on_close(websocketpp::connection_hdl hdl)
+{
 }
 
 void WebSocketClient::OnRecive(websocketpp::connection_hdl, client::message_ptr msg) {
