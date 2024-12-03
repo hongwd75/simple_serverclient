@@ -10,3 +10,6 @@ unity/viewer/Logs
 unity/viewer/obj/Debug
 unity/viewer/UserSettings
 run.bat
+Client/x64
+server/x64
+x64
