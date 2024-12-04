@@ -5,7 +5,7 @@
 
 void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
 {
-	auto start = std::chrono::high_resolution_clock::now();
+	return;
 	auto packet = flatbuffers::GetRoot<NetworkMessage::CS_UpdatePosition>(recvdata->data());
 	user->GetAccount()->UpdatePosition(packet->head(), packet->position()->x(), packet->position()->y(), packet->position()->z());
 
@@ -23,12 +23,7 @@ void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vecto
 	auto sendpacket = FlatBufferUtil::MakeProtocal(NetworkMessage::ServerPackets::ServerPackets_SC_UpdatePosition, &req);
 	auto sendlist = connectSessions->GetConnectVector(plist, user);
 
-	auto end1 = std::chrono::high_resolution_clock::now();
+	//ServerMain::instance()->SocketMan()->SendBroadcast(sendlist, sendpacket);
+	ServerMain::instance()->SocketMan()->Send(user->GetSocket(), sendpacket);
 
-	ServerMain::instance()->SocketMan()->SendBroadcast(sendlist, sendpacket);
-	
-	auto end2 = std::chrono::high_resolution_clock::now();
-	auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start);
-	auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>(end2 - end1);
-	std::cout << "함수 실행 시간: " << duration1.count() + duration2.count() << " 마이크로초  " <<  duration1.count() << " / " << duration2.count() << std::endl;
 }

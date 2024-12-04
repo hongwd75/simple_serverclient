@@ -31,6 +31,7 @@ void ClientManager::OnForceDisconnectEvent(void* sender, EventArgs* args)
 #pragma region 소켓 세션 관리
 bool ClientManager::AddSession(websocketpp::connection_hdl hdl)
 {
+	std::lock_guard<std::mutex> lock(session_mutex);
 	if (emptyClientSlot.empty() == false)
 	{
 		int slot = emptyClientSlot.front();
@@ -214,9 +215,10 @@ Client* ClientManager::GetClientBySession(int sessionid)
 
 int ClientManager::GetClientSize()
 {
-	std::lock_guard<std::mutex> lock(session_mutex);
-	int size = sock2Client.size();
-	return size;
+	return 0;
+	//std::lock_guard<std::mutex> lock(session_mutex);
+	//int size = sock2Client.size();
+	//return size;
 }
 
 

@@ -37,7 +37,7 @@ ServerMain::ServerMain()
 
 	try
 	{
-		serversocket.Start(1000,10);
+		serversocket.Start(1000, core_count);
 	}
 	catch (const std::exception& e)
 	{

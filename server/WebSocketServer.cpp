@@ -10,22 +10,20 @@ WebSocketServer::WebSocketServer() : connectSessions(this)
 	socketInstance.set_close_handler(std::bind(&WebSocketServer::OnDisconnect, this, std::placeholders::_1));
 	socketInstance.set_fail_handler(std::bind(&WebSocketServer::OnDisconnect, this, std::placeholders::_1));
 	socketInstance.set_message_handler(std::bind(&WebSocketServer::OnRecive, this, std::placeholders::_1, std::placeholders::_2));
-	
 }
 
 void WebSocketServer::Start(uint16_t port, int threadsize)
 {
-	// 작업 쓰레드 생성
-	for (int i = 0; i < threadsize; ++i) {
-		workerThreads.emplace_back(&WebSocketServer::WorkerThread, this);
-	}
-
 	socketInstance.clear_access_channels(websocketpp::log::alevel::all); 
-	socketInstance.set_error_channels(websocketpp::log::elevel::all);  // 모든 에러 로그
+	socketInstance.set_access_channels(websocketpp::log::alevel::frame_payload);
 	socketInstance.listen(port);
 	socketInstance.start_accept();
-
-	socketioThread.emplace_back([this] { socketInstance.run(); });
+	
+	for (int i = 0; i < threadsize; ++i) 
+	{
+		workerThreads.emplace_back(&WebSocketServer::WorkerThread, this);
+		socketioThread.emplace_back([this] { socketInstance.run(); });
+	}
 }
 
 void WebSocketServer::Stop()
@@ -52,7 +50,8 @@ void WebSocketServer::Stop()
 
 void WebSocketServer::WorkerThread() {
 	while (running) {
-		std::function<void()> task;
+		TaggedTask taggedTask;
+		int queuesize = 0;
 		{
 			std::unique_lock<std::mutex> lock(queueMutex);
 			queueCv.wait(lock, [this] { return !taskQueue.empty() || !running; });
@@ -61,12 +60,20 @@ void WebSocketServer::WorkerThread() {
 				break;
 			}
 
-			task = std::move(taskQueue.front());
+			taggedTask = std::move(taskQueue.front());
 			taskQueue.pop();
+			queuesize = taskQueue.size();
 		}
 
-		if (task) {
-			task();
+		if (taggedTask.task) {
+			auto start = std::chrono::high_resolution_clock::now();
+			taggedTask.task();
+			auto end = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+			std::ostringstream oss;
+			oss << "Task 실행 시간: " << duration.count() << "ms | 큐 : "<< queuesize  <<"\n";
+			OutputDebugStringA(oss.str().c_str());
 		}
 	}
 }
@@ -75,35 +82,82 @@ void WebSocketServer::WorkerThread() {
 void WebSocketServer::Send(websocketpp::connection_hdl hdl, const std::vector<uint8_t>& data)
 {
 	auto shared_data = std::make_shared<std::vector<uint8_t>>(data);
+	try
+	{
+		socketInstance.send(hdl, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
+	}
+	catch (const std::exception& e) {
+		// 예외 처리
+		std::cerr << "Send exception: " << e.what() << std::endl;
+		//EventCallbackManager::instance()->Notify(EventCallback::eTrigger::RemoveClientNetworkHandle, nullptr, new ForceDisconnedEventArgs(hdl));
+	}
+	return;
 	{
 		std::lock_guard<std::mutex> lock(queueMutex);
-		taskQueue.push([this, hdl, shared_data] {
-			try {
-				socketInstance.send(hdl, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
-			}
-			catch (const websocketpp::exception& e) {
-				// 예외 처리
-				std::cerr << "Send exception: " << e.what() << std::endl;
-			}
+		taskQueue.push(
+			{ "Send",[this, hdl, shared_data] {
+				try
+				{
+					socketInstance.send(hdl, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
+				}
+				catch (const std::exception& e) {
+					// 예외 처리
+					std::cerr << "Send exception: " << e.what() << std::endl;
+					//EventCallbackManager::instance()->Notify(EventCallback::eTrigger::RemoveClientNetworkHandle, nullptr, new ForceDisconnedEventArgs(hdl));
+				}
+				} 
 			});
 	}
 	queueCv.notify_one();
 }
 
-void WebSocketServer::SendBroadcast(std::vector<websocketpp::connection_hdl>& clients, const std::vector<uint8_t>& data)
+void WebSocketServer::SendBroadcast(const std::vector<websocketpp::connection_hdl>& clients, const std::vector<uint8_t>& data)
 {
 	auto shared_data = std::make_shared<std::vector<uint8_t>>(data);
+	for (auto& client : clients) 
+	{
+
+		try
+		{
+			if (socketInstance.get_con_from_hdl(client)->get_buffered_amount() > 100)
+			{
+				std::cout << "datasize:" << shared_data->size() << "buffered_amount " << socketInstance.get_con_from_hdl(client)->get_buffered_amount() << std::endl;
+			}
+
+			socketInstance.send(client, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
+
+		}
+		catch (const std::exception& e) {
+			// 예외 처리
+			std::cerr << "Broadcast exception: " << e.what() << std::endl;
+			//EventCallbackManager::instance()->Notify(EventCallback::eTrigger::RemoveClientNetworkHandle, nullptr, new ForceDisconnedEventArgs(client));
+		}
+	}
+	return;
 	{
 		std::lock_guard<std::mutex> lock(queueMutex);
+		
 		for (auto& client : clients) {
-			taskQueue.push([this, client, shared_data] {
-				try {
-					socketInstance.send(client, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
-				}
-				catch (const websocketpp::exception& e) {
-					// 예외 처리
-					std::cerr << "Broadcast exception: " << e.what() << std::endl;
-				}
+			taskQueue.push(
+				{"SendBroadcast", 
+				[this, client, shared_data] 
+				{
+					try
+					{
+						if (socketInstance.get_con_from_hdl(client)->get_buffered_amount() > 100)
+						{
+							std::cout << "datasize:" << shared_data->size() << "buffered_amount " << socketInstance.get_con_from_hdl(client)->get_buffered_amount() << std::endl;
+						}
+
+						socketInstance.send(client, shared_data->data(), shared_data->size(), websocketpp::frame::opcode::binary);
+
+					}
+					catch (const std::exception& e) {
+						// 예외 처리
+						std::cerr << "Broadcast exception: " << e.what() << std::endl;
+						//EventCallbackManager::instance()->Notify(EventCallback::eTrigger::RemoveClientNetworkHandle, nullptr, new ForceDisconnedEventArgs(client));
+					}
+				} 
 				});
 		}
 	}
@@ -148,21 +202,34 @@ void WebSocketServer::OnRecive(websocketpp::connection_hdl hdl, websocketpp::ser
 {
 	if (recvdata->get_opcode() == websocketpp::frame::opcode::binary)
 	{
-		auto packetWarpper = NetworkMessage::GetPacketWrapper(recvdata->get_payload().data());
-		if (packetWarpper != nullptr)
+		auto payload_ptr = std::make_shared<std::vector<uint8_t>>(recvdata->get_payload().begin(), recvdata->get_payload().end());
+		
+		//if (packetWarpper != nullptr)
 		{
-			auto packetType = packetWarpper->type();
-			auto packetData = packetWarpper->packet();
-			
-			connectSessions.ExecuteWithLock([&]() 
-				{
-					auto target = connectSessions.GetClient(hdl);
-					if (target != nullptr)
+			{
+				std::lock_guard<std::mutex> lock(queueMutex);
+				taskQueue.push(
+					{"",
+					[this, hdl, payload_ptr = std::move(payload_ptr)]
 					{
-						target->OnRecive(packetType, packetData);
-					}
-				});
+						auto packetWarpper = NetworkMessage::GetPacketWrapper(payload_ptr->data());
+						if (packetWarpper != nullptr)
+						{
+							auto packetType = packetWarpper->type();
+							auto packetData = packetWarpper->packet();
+							connectSessions.ExecuteWithLock([&, packetType = packetType, packetData = std::move(packetData)]()
+								{
+									if (auto target = connectSessions.GetClient(hdl))
+									{
+										target->OnRecive(packetType, packetData);
+									}
+								});
+						}
+					} 
+					});
 
+			}
+			queueCv.notify_one();
 		}
 	}
 	else
