@@ -7,9 +7,9 @@
 
 
 float getRandomFloatInRange(float lower, float upper) {
-	static std::random_device rd;
-	static std::mt19937 generator(rd());  // Mersenne Twister 엔진 사용
-	std::uniform_real_distribution<float> distribution(lower, upper);
+	thread_local static std::random_device rd;
+	thread_local static std::mt19937 generator(rd());
+	thread_local static std::uniform_real_distribution<float> distribution(lower, upper);
 	return distribution(generator);
 }
 
@@ -28,7 +28,7 @@ void AutoPlay::Wakeup()
 		while (thinking.load() == true)
 		{
 			OnThink();
-			std::this_thread::sleep_for(std::chrono::microseconds(500));
+			std::this_thread::sleep_for(std::chrono::microseconds(100));
 		}
 
 	});
@@ -99,7 +99,7 @@ void AutoPlay::MoveRandom(Player *player)
 	{
 		movex  = getRandomFloatInRange(minx, maxx);
 		movez  = getRandomFloatInRange(minz, maxz);
-		directmove = rand() % 100 + 400;
+		directmove = (int)getRandomFloatInRange(0, 100) + 400;
 	}
 
 	int heading = player->calc_heading(pos.x, pos.z);
