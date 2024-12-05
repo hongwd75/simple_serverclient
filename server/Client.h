@@ -20,7 +20,7 @@ public:
 	void SetAccount(Account* info);
 	void SetPlayerState(Enums::ClientState st);
 
-	websocketpp::connection_hdl GetSocket();
+	const websocketpp::connection_hdl GetSocket();
 	int GetSessionID() { return SessionID; }
 
 	Enums::ClientState GetPlayerState();
@@ -29,7 +29,7 @@ public:
 public:
 	template<typename T>
 	void Send(NetworkMessage::ServerPackets packetid, const T* message);
-	void Send(const std::vector<uint8_t>& data);
+	void Send(const std::shared_ptr<std::vector<uint8_t>> shared_data);
 	void OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uint8_t>* packetData);
 
 private:
@@ -52,7 +52,6 @@ private:
 template<typename T>
 inline void Client::Send(NetworkMessage::ServerPackets packetid, const T* message)
 {
-	auto packet = FlatBufferUtil::MakeProtocal(packetid, message);
-	Send(packet);
+	Send(FlatBufferUtil::MakeProtocal(packetid, message));
 }
 #endif // CLIENT_H

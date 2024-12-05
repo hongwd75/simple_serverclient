@@ -3,7 +3,7 @@
 
 LockManager LoginReqHandler::lockman;
 
-void LoginReqHandler::HandlePacket( Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
+void LoginReqHandler::HandlePacket(Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
 {
 	auto packet = flatbuffers::GetRoot<NetworkMessage::CS_LoginReq>(recvdata->data());
 	if (packet != nullptr)

@@ -28,7 +28,7 @@ void AutoPlay::Wakeup()
 		while (thinking.load() == true)
 		{
 			OnThink();
-			std::this_thread::sleep_for(std::chrono::microseconds(100));
+			std::this_thread::sleep_for(std::chrono::microseconds(100000));
 		}
 
 	});
@@ -99,7 +99,7 @@ void AutoPlay::MoveRandom(Player *player)
 	{
 		movex  = getRandomFloatInRange(minx, maxx);
 		movez  = getRandomFloatInRange(minz, maxz);
-		directmove = (int)getRandomFloatInRange(0, 100) + 400;
+		directmove = (int)getRandomFloatInRange(0, 10) + 4;
 	}
 
 	int heading = player->calc_heading(pos.x, pos.z);

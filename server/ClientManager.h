@@ -7,6 +7,10 @@
 #include "EventCallbackManager.h"
 
 class WebSocketServer;
+struct TaggedTask {
+	std::string tag;
+	std::function<void()> task;
+};
 
 class ForceDisconnedEventArgs : public EventArgs 
 {
@@ -52,7 +56,7 @@ public:
 	}
 
 	std::vector<Client*> GetRangeUsers(Structs::Vector3 pos, int range);
-	std::vector< websocketpp::connection_hdl> GetConnectVector(std::vector<Client*> list, Client* remove);
+	std::vector< websocketpp::connection_hdl> GetConnectVector(const std::vector<Client*> list, Client* remove);
 public:
 	Client *GetClientByUID(uint64_t uid);
 	Client *GetClient(websocketpp::connection_hdl hdl);
@@ -66,7 +70,7 @@ private:
 	std::unordered_map<websocketpp::connection_hdl,	int, connection_hdl_hash, connection_hdl_equal> sock2Client;
 
 	std::queue<int> emptyClientSlot;
-	std::vector<std::unique_ptr<Client>> ClientSlot;
+	std::vector<Client*> ClientSlot;
 	std::mutex session_mutex;
 	WebSocketServer* server;
 };

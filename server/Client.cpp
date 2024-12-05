@@ -18,7 +18,7 @@ void Client::RestSocket()
 	connection.reset();
 }
 
-websocketpp::connection_hdl Client::GetSocket()
+const websocketpp::connection_hdl Client::GetSocket()
 {
 	return connection;
 }
@@ -59,11 +59,11 @@ void Client::OnRecive(const uint16_t packetType, const ::flatbuffers::Vector<uin
 }
 
 
-void Client::Send(const std::vector<uint8_t>& data)
+void Client::Send(const std::shared_ptr<std::vector<uint8_t>> shared_data)
 {
 	try
 	{
-		_svr->Send(connection, data);
+		_svr->Send(connection, shared_data);
 	}
 	catch (const std::exception&)
 	{

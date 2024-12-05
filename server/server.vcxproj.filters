@@ -105,6 +105,9 @@
     <ClCompile Include="FlatBufferUtil.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="TaskQueueThread.cpp">
+      <Filter>소스 파일\Base\Thread Pool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleDisplay.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="FlatBufferUtil.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskQueueThread.h">
+      <Filter>소스 파일\Base\Thread Pool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

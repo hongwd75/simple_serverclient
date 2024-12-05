@@ -12,11 +12,8 @@
 #include <thread>
 #include <mutex>
 #include "ClientManager.h"
+#include "TaskQueueThread.h"
 
-struct TaggedTask {
-	std::string tag;
-	std::function<void()> task;
-};
 
 class WebSocketServer
 {
@@ -24,28 +21,23 @@ public:
 	WebSocketServer();
 	void Start(uint16_t port,int threadsize);
 	void Stop();
-	void Send(websocketpp::connection_hdl hdl, const std::vector<uint8_t>& data);
-	void SendBroadcast(const std::vector<websocketpp::connection_hdl>& clients, const std::vector<uint8_t>& data);
+	void Send(const websocketpp::connection_hdl hdl, const std::shared_ptr<std::vector<uint8_t>> shared_data);
+	void SendBroadcast(const std::vector<websocketpp::connection_hdl>& clients, const std::shared_ptr<std::vector<uint8_t>> shared_data);
 
 	ClientManager* GetClientManager();
 	websocketpp::server<websocketpp::config::asio>* GetSocketpp();
 
 private: 
-	void OnConnect(websocketpp::connection_hdl hdl);
-	void OnDisconnect(websocketpp::connection_hdl hdl);
-	void OnRecive(websocketpp::connection_hdl hdl, websocketpp::server<websocketpp::config::asio>::message_ptr recvdata);
-	void WorkerThread(); // 비동기 작업 처리 쓰레드 함수
+	void OnConnect(const websocketpp::connection_hdl hdl);
+	void OnDisconnect(const websocketpp::connection_hdl hdl);
+	void OnRecive(const websocketpp::connection_hdl hdl, const websocketpp::server<websocketpp::config::asio>::message_ptr recvdata);
 
 private:
 	std::vector<std::thread> socketioThread;
-	std::vector<std::thread> workerThreads; // 작업 쓰레드
-	websocketpp::server<websocketpp::config::asio> socketInstance;
+	TaskQueueThread taskQueueThread;
+	TaskQueueThread sendQueueThread;
 	ClientManager connectSessions;
-
-	// 작업 큐 및 동기화 변수
-	std::queue<TaggedTask> taskQueue;
-	std::mutex queueMutex;
-	std::condition_variable queueCv;
-	bool running = true;
+	websocketpp::server<websocketpp::config::asio> socketInstance;
+	
 };
 

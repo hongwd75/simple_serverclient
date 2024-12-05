@@ -21,6 +21,9 @@ public:
 
         UID = other.UID;
         AccountName = other.AccountName;
+        heading = other.heading;
+        realm = other.realm;
+        position = other.position;
         return *this;
     }
 

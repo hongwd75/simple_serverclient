@@ -1,11 +1,9 @@
 ﻿#include "UpdatePositionHandler.h"
 #include "ServerMain.h"
 #include "FlatBufferUtil.h"
-#include <chrono>
 
 void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vector<uint8_t>* recvdata)
 {
-	return;
 	auto packet = flatbuffers::GetRoot<NetworkMessage::CS_UpdatePosition>(recvdata->data());
 	user->GetAccount()->UpdatePosition(packet->head(), packet->position()->x(), packet->position()->y(), packet->position()->z());
 
@@ -22,8 +20,6 @@ void UpdatePositionHandler::HandlePacket(Client* user, const::flatbuffers::Vecto
 
 	auto sendpacket = FlatBufferUtil::MakeProtocal(NetworkMessage::ServerPackets::ServerPackets_SC_UpdatePosition, &req);
 	auto sendlist = connectSessions->GetConnectVector(plist, user);
-
-	//ServerMain::instance()->SocketMan()->SendBroadcast(sendlist, sendpacket);
-	ServerMain::instance()->SocketMan()->Send(user->GetSocket(), sendpacket);
-
+	
+	ServerMain::instance()->SocketMan()->SendBroadcast(sendlist, sendpacket);
 }

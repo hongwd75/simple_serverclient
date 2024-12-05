@@ -20,7 +20,8 @@ namespace Network.Protocol
 			PlayerInfo player = new PlayerInfo()
 			{
 				name = packet.Nickname,
-				sessionID = packet.Sessionid
+				sessionID = packet.Sessionid,
+				realm = 0
 			};
 			EntityManager.Instance.myPlayerInfo = player;
 			WorldJoinReq();

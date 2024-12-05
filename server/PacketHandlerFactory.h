@@ -19,7 +19,7 @@ public:
         m_handlers[id] = creator;
     }
 
-    std::unique_ptr<PacketHandler> GetHandler(NetworkMessage::ClientPackets id)
+    const std::unique_ptr<PacketHandler> GetHandler(NetworkMessage::ClientPackets id)
     {
         auto it = m_handlers.find(id);
         if (it != m_handlers.end())

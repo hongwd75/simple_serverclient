@@ -35,7 +35,7 @@ bool ClientManager::AddSession(websocketpp::connection_hdl hdl)
 	if (emptyClientSlot.empty() == false)
 	{
 		int slot = emptyClientSlot.front();
-		ClientSlot[slot] = std::make_unique<Client>(hdl, slot, server);
+		ClientSlot[slot] = new Client(hdl, slot, server);
 		sock2Client.insert({ hdl, slot });
 		emptyClientSlot.pop();
 
@@ -104,7 +104,10 @@ void ClientManager::RemoveSession(websocketpp::connection_hdl hdl)
 				{
 					Clients.erase(uid);
 				}
-				ClientSlot[sessionid].reset();
+				if (ClientSlot[sessionid] != nullptr)
+				{
+					delete ClientSlot[sessionid];
+				}
 				ClientSlot[sessionid] = nullptr;
 				emptyClientSlot.push(sessionid);
 			}
@@ -124,7 +127,7 @@ void ClientManager::RemoveSessionByUUID(uint64_t uid)
 
 	if (itr != Clients.end())
 	{
-		Client* ptr = ClientSlot[(*itr).second].get();
+		Client* ptr = ClientSlot[(*itr).second];
 		if (ptr != nullptr)
 		{
 			auto uid = ptr->GetAccount()->UID;
@@ -158,7 +161,7 @@ std::vector<Client*> ClientManager::GetRangeUsers(Structs::Vector3 pos, int rang
 	for (const auto& client : Clients) {
 
 		int client_data = client.second;  // 클라이언트 데이터 (예: 해당 시간에 관련된 정보)
-		auto user = ClientSlot[client_data].get();
+		auto user = ClientSlot[client_data];
 		if (user != nullptr)
 		{
 			if (user->GetPlayerState() == Enums::ClientState::Room)
@@ -170,7 +173,7 @@ std::vector<Client*> ClientManager::GetRangeUsers(Structs::Vector3 pos, int rang
 	return rangeusers;
 }
 
-std::vector<websocketpp::connection_hdl> ClientManager::GetConnectVector(std::vector<Client*> list, Client* remove)
+std::vector<websocketpp::connection_hdl> ClientManager::GetConnectVector(const std::vector<Client*> list, Client* remove)
 {
 	std::vector<websocketpp::connection_hdl> ret;
 	for (auto player : list)
@@ -188,7 +191,7 @@ Client* ClientManager::GetClientByUID(uint64_t uid)
 	auto itr = Clients.find(uid);
 	if (itr != Clients.end())
 	{
-		return ClientSlot[(*itr).second].get();
+		return ClientSlot[(*itr).second];
 	}
 
 	return nullptr;
@@ -199,7 +202,7 @@ Client* ClientManager::GetClient(websocketpp::connection_hdl hdl)
 	auto itr = sock2Client.find(hdl);
 	if (itr != sock2Client.end())
 	{
-		return ClientSlot[(*itr).second].get();
+		return ClientSlot[(*itr).second];
 	}
 	return nullptr;
 }
@@ -208,7 +211,7 @@ Client* ClientManager::GetClientBySession(int sessionid)
 {
 	if (ClientSlot[sessionid] != nullptr)
 	{
-		return ClientSlot[sessionid].get();
+		return ClientSlot[sessionid];
 	}
 	return nullptr;
 }
