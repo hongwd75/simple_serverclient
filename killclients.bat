@@ -4,4 +4,3 @@
 taskkill /IM client.exe /F
 
 echo All client.exe processes have been terminated.
-pause
