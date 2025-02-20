@@ -43,9 +43,23 @@
   <ItemGroup>
     <Analyzer Include="E:\Unity\Hub\Editor\2022.3.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="E:\Unity\Hub\Editor\2022.3.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.QueryBuilder.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.LambdaJobs.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.Common.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.Query.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.AspectGenerator.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.Common.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.EntityQueryBulkOperations.dll" />
+    <Analyzer Include="E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.JobEntityGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Folder Include="Assets" />
+     <Compile Include="Assets\Scripts\Utility\Editor\Refresh\RefreshMessageBox.cs" />
+     <Folder Include="Assets\Scripts\Utility\Editor\Refresh" />
+     <Folder Include="Assets\Scripts\Utility\Editor" />
      <Reference Include="UnityEngine">
      <HintPath>E:\Unity\Hub\Editor\2022.3.9f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -310,6 +324,9 @@
      <Reference Include="Unity.VisualScripting.YamlDotNet">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Collections.LowLevel.ILSupport">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     </Reference>
      <Reference Include="unityplastic">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
      </Reference>
@@ -330,6 +347,9 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.TextureAssets">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.visualscripting@1.9.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
+     </Reference>
+     <Reference Include="Mono.Cecil">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -724,23 +744,83 @@
      <Reference Include="UnityEngine.TestRunner">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Runtime">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Burst">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+     <Reference Include="Unity.ScriptableBuildPipeline">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Entities">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Rider.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Entities.Build">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Build.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Entities.Hybrid">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Hybrid.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Flow">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Entities.UI.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.UI.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Entities.Hybrid.HybridComponents">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Hybrid.HybridComponents.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Collections">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Deformations">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Deformations.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Collections.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="PPv2URPConverters">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.TextMeshPro">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VSCode.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Profiling.Core">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics.Extensions.Hybrid">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.PlasticSCM.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Burst">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Timeline.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
@@ -760,26 +840,26 @@
      <Reference Include="Unity.VisualScripting.Core">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.VisualScripting.Core.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Rider.Editor">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Editor">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+     <Reference Include="UnityEditor.CacheServer">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\UnityEditor.CacheServer.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Flow">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+     <Reference Include="Unity.Entities.Graphics">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Graphics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Flow.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Mathematics.Editor">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+     <Reference Include="Unity.Transforms.Hybrid">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Transforms.Hybrid.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Serialization.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Serialization.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
@@ -787,23 +867,35 @@
      <Reference Include="Unity.Timeline">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Transforms">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Transforms.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Serialization">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Serialization.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Scenes.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Scenes.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+     <Reference Include="Unity.Entities.Graphics.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Graphics.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.State.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="PPv2URPConverters">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+     <Reference Include="Unity.Entities.UI">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.TextMeshPro">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+     <Reference Include="Unity.Entities.Editor.Properties">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Editor.Properties.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -811,17 +903,20 @@
      <Reference Include="Unity.Searcher.Editor">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+     <Reference Include="Unity.Mathematics.Extensions">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Mathematics.Extensions.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VSCode.Editor">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+     <Reference Include="Unity.Scenes">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Scenes.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+     <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Entities.Editor">
+     <HintPath>E:\Project\Cpp\ServerClient\unity\viewer\Library\ScriptAssemblies\Unity.Entities.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

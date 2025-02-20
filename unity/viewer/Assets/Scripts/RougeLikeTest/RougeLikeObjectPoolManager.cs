@@ -13,6 +13,9 @@ namespace Characters
 
         public static RougeLikeObjectPoolManager PoolManager;
 
+        protected int spawnedObjectCount = 0;
+
+        public int ActiveObjectCount => spawnedObjectCount;
         private void Awake()
         {
             PoolManager = this;
@@ -20,7 +23,11 @@ namespace Characters
 
         public void AddPool(MoveObject obj)
         {
-            objectPool.Enqueue(obj);
+            if (obj != null)
+            {
+                spawnedObjectCount--;
+                objectPool.Enqueue(obj);
+            }
         }
 
         public MoveObject Get()
@@ -39,6 +46,7 @@ namespace Characters
             if (outObj != null)
             {
                 outObj.Init();
+                spawnedObjectCount++;
             }
             return outObj;
         }

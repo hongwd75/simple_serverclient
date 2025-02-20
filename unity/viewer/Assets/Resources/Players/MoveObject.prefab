@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6178615377008266277}
   - component: {fileID: 6737054329298358784}
   - component: {fileID: 2909614129036439106}
+  - component: {fileID: 9077792821571314695}
   m_Layer: 0
   m_Name: MoveObject
   m_TagString: Untagged
@@ -123,4 +124,17 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 139206f3a66f7b741acdfd109d7649c6, type: 2}
   - {fileID: 2100000, guid: 843c0d3c0c5d6d646af877dd41db44df, type: 2}
   - {fileID: 2100000, guid: c42127e5fae6fd844b6c84a059b5b59e, type: 2}
+  meshRenderer: {fileID: 6178615377008266277}
+--- !u!114 &9077792821571314695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997536712282782691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab06bb4a5d70487a82cceee7dda90cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   meshRenderer: {fileID: 6178615377008266277}

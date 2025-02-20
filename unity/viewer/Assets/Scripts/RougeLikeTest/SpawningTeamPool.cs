@@ -34,15 +34,18 @@ namespace Characters
         {
             while (spawning)
             {
-                yield return new WaitForSeconds(0.001f);
-                Vector3 tpos = gameObject.transform.position;
-                Vector2 spos = new Vector2(tpos.x, tpos.z);
-                var pos = RandomPointInAnnulus(spos, 1.5f, 15.5f);
-
-                var moveObject = RougeLikeObjectPoolManager.PoolManager.Get();
-                if (moveObject != null)
+                yield return new WaitForSeconds(0.0001f);
+                if (RougeLikeObjectPoolManager.PoolManager.ActiveObjectCount < 50000)
                 {
-                    moveObject.SetBase(pos.x,pos.y,color);
+                    Vector3 tpos = gameObject.transform.position;
+                    Vector2 spos = new Vector2(tpos.x, tpos.z);
+                    var pos = RandomPointInAnnulus(spos, 1.5f, 26.5f);
+
+                    var moveObject = RougeLikeObjectPoolManager.PoolManager.Get();
+                    if (moveObject != null)
+                    {
+                        moveObject.SetBase(pos.x, pos.y, color);
+                    }
                 }
             }
 

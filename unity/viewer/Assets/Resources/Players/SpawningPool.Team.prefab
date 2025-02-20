@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3509089818907977840}
   - component: {fileID: 7175468264731721707}
   - component: {fileID: 4516204965737908080}
+  - component: {fileID: 5378011207028618773}
   m_Layer: 0
   m_Name: SpawningPool.Team
   m_TagString: Untagged
@@ -123,4 +124,20 @@ MonoBehaviour:
   spawingObject: {fileID: 997536712282782691, guid: d57d70437acc6aa469625918de1d12b8,
     type: 3}
   color: 1
+  spawningTime: 2
+--- !u!114 &5378011207028618773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337684733696374526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd71ca552744384a60b3413d8e60255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawingObject: {fileID: 997536712282782691, guid: d57d70437acc6aa469625918de1d12b8,
+    type: 3}
+  color: 0
   spawningTime: 2
